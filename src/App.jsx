@@ -3,7 +3,6 @@ import Header from "./components/Header/Header"
 import Listagem from "./components/Listagem/Listagem"
 
 function App() {
-
   return (
     <>
       <Header />
