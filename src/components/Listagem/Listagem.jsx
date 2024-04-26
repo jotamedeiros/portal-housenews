@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-key */
-import styles from './Listagem.module.css'
-import moment from 'moment'
-import { getPastTime } from '../../utils'
+import './Listagem.module.css'
+import NewsCard from './NewsCard/NewsCard'
 
     // https://api.gdeltproject.org/api/v2/doc/doc
     //?query=%20sourcelang:por
@@ -14,17 +13,16 @@ import { getPastTime } from '../../utils'
 export default function Listagem({ articles }) {
     return (
         <>
+            <h2>Breaking News</h2>
             <main>
-                <h2>Breaking News</h2>
                 {
                     articles.map(el => (
-                        <div className={styles.newsItem}>
-                            <p>title: {el.title}</p>
-                            <p>url: {el.url}</p>
-                            <p>date: {moment(el.seendate).format('DD/MM/YYYY - HH:mm')}</p>
-                            <p>past hours: há {getPastTime(el.seendate)} horas atrás</p>
-                            <img src={el.socialimage} />
-                        </div>
+                        <NewsCard
+                            title={el.title}
+                            url={el.url}
+                            seendate={el.seendate}
+                            socialimage={el.socialimage}
+                        />
                     ))
                 }
             </main>
