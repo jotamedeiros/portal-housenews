@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import styles from './Listagem.module.css'
 import gdelt from '../../gdelt'
+import moment from 'moment'
+import { getPastTime } from '../../utils'
 
 // const news = [
 //     {
@@ -81,7 +83,8 @@ export default function Listagem() {
                         <div className={styles.newsItem}>
                             <p>title: {el.title}</p>
                             <p>url: {el.url}</p>
-                            <p>date: {el.seendate}</p>
+                            <p>date: {moment(el.seendate).format('DD/MM/YYYY - HH:mm')}</p>
+                            <p>past hours: há {getPastTime(el.seendate)} horas atrás</p>
                             <img src={el.socialimage} />
                         </div>
                     ))
