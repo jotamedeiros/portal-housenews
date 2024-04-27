@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { getPastTime } from "../../../utils";
 import styles from "./NewsCard.module.css";

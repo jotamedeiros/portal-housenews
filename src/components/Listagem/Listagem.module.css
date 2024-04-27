@@ -1,5 +1,14 @@
 main {
     width: 100%;
-    max-width: 1980px;
+    max-width: 1440px;
     min-height: 80vh;
+    background-color: #ececec;
+    margin: 0 auto;
+}
+
+.bnewsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    place-content: center;
+    column-gap: 1rem;
 }
