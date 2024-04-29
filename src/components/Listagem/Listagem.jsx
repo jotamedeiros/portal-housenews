@@ -16,7 +16,7 @@ export default function Listagem({ articles }) {
         <>
             <main>
                 <h2>Breaking News</h2>
-                <div className={styles.bnewsContainer}>
+                <div className={styles.breakingNewsContainer}>
                     {
                         articles.map(el => (
                             <NewsCard

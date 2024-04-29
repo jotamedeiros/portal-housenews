@@ -16,7 +16,7 @@ function App() {
           gdelt.get('/doc', {
               params: {
                   query: 'sourcelang:por',
-                  maxrecords: 10,
+                  maxrecords: 9,
                   format: 'json',
                   timespan: '1d',
               }
