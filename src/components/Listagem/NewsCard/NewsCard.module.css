@@ -1,6 +1,7 @@
 :root {
     --primary-color: #D81010;
-    --white-color: #f5f5f5;
+    --white-color: hsl(0, 0%, 96%);
+    --dark-color: #333333;
 }
 
 .newsCard {
@@ -20,7 +21,44 @@
     cursor: pointer;
 }
 
+.newsCard .img {
+    width: 100%;
+    min-width: 400px;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+}
+
 .newsCard img {
     width: 100%;
-    border-radius: .5rem;
+    border-radius: .3rem;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+
+.newsCard .generalInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    gap: 1.2rem;
+}
+
+.newsCard h3 {
+    min-height: calc(1.3rem * 3);
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.newsCard p {
+    color: #888888;
+    margin-bottom: -0.3rem;
+    font-size: .9rem;
+}
+
+.newsCard a {
+    color: var(--primary-color);
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
 }

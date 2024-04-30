@@ -18,12 +18,14 @@ export default function Listagem({ articles }) {
                 <h2>Breaking News</h2>
                 <div className={styles.breakingNewsContainer}>
                     {
-                        articles.map(el => (
+                        articles.map((el, i) => (
                             <NewsCard
+                                key={i}
                                 title={el.title}
                                 url={el.url}
                                 seendate={el.seendate}
                                 socialimage={el.socialimage}
+                                articles={articles}
                             />
                         ))
                     }
