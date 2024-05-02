@@ -15,7 +15,9 @@ export default function Listagem({ articles }) {
     return (
         <>
             <main>
-                <h2>Breaking News</h2>
+                <div className={styles.mainTitle}>
+                    {/* <h2>Breaking News</h2> */}
+                </div>
                 <div className={styles.breakingNewsContainer}>
                     {
                         articles.map((el, i) => (

@@ -22,7 +22,6 @@ function App() {
               }
           })
           .then(({ data }) => {
-              console.log(data?.articles)
               if (typeof data === 'string') {
                   console.error(`Error fetching data: ${data}`)
               } else if (typeof data === 'object' && 'articles' in data) {

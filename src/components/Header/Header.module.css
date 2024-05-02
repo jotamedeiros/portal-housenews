@@ -22,38 +22,13 @@
     height: auto;
 }
 
-/* Estilizações parte de cima do Header [Logo + Login] */
+/* Estilizações parte de cima do Header */
 .topHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     padding: 1rem 1.5rem;
-}
-
-.logoContainer {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    gap: .5rem;
-}
-
-.logoImg {
-    width: 70px;
-}
-
-.logoTitle {
-    font-size: 2.25rem;
-    font-family: var(--primary-font);
-    font-weight: 700;
-    color: var(--white-color);
-    margin-bottom: .25rem;
-}
-
-.logoSlogan {
-    font-size: .9rem;
-    font-family: var(--primary-font);
-    color: var(--white-color);
 }
 
 /* Estilizações do campo de pesquisa */

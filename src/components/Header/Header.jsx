@@ -1,18 +1,12 @@
-import Logo from '../../assets/images/housenews.png'
 import SearchIcon from '../../assets/icons/search-32.svg'
+import Logo from '../Logo/Logo'
 import styles from './Header.module.css'
 
 export default function Header() {
     return (
         <header className={styles.header}>
             <div className={styles.topHeader}>
-                <a className={styles.logoContainer} href="#">
-                    <img className={styles.logoImg} src={Logo} alt="Logo House News" />
-                    <div className={styles.logoNameBox}>
-                        <h1 className={styles.logoTitle}>House News</h1>
-                        <p className={styles.logoSlogan}>Humans are diverse. Information is plural.</p>
-                    </div>
-                </a>
+                <Logo />
 
                 <div className={styles.searchContainer}>
                     <input className={styles.inputSearch} type="text" name="search" id="search" placeholder='O que você está procurando?' />
