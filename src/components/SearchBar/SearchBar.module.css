@@ -1,0 +1,16 @@
+/* Estilizações do campo de pesquisa */
+.inputSearch {
+    width: 22rem;
+    height: .9rem;
+    padding: .8rem 1rem;
+    border: 2px solid var(--white-color);
+    border-radius: .3rem;
+}
+
+.iconSearch {
+    height: 24px;
+    width: 24px;
+    margin-left: -2rem;
+    margin-bottom: -0.5rem;
+    cursor: pointer;
+}
