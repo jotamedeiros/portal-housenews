@@ -15,10 +15,12 @@
     font-weight: 700;
     color: var(--white-color);
     margin-bottom: .25rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.603);
 }
 
 .logoSlogan {
     font-size: .9rem;
     font-family: var(--primary-font);
     color: var(--white-color);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.603);
 }

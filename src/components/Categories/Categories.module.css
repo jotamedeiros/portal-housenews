@@ -2,20 +2,20 @@
 .navContainer {
     width: 100%;
     height: auto;
-    padding-block: 1rem;
+    padding-block: .725rem;
     border-top: .5px solid var(--offwhite-color);
 }
 
 .navList {
     display: flex;
     justify-content: space-between;
-    padding-inline: 1.3rem;
+    padding-inline: 3rem;
 }
 
 .navItem {
     color: var(--offwhite-color);
     font-family: var(--primary-font);
-    font-size: 1rem;
+    font-size: .9rem;
     font-weight: 600;
     text-decoration: none;
     padding-inline: .5rem;
@@ -40,9 +40,9 @@
 }
 
 .footerNavItem {
-    color: var(--offwhite-color);
+    color: var(--white-color);
     font-family: var(--primary-font);
-    font-size: 1rem;
+    font-size: .9rem;
     font-weight: 600;
     padding-inline: .5rem;
     text-decoration: none;
@@ -50,4 +50,5 @@
 
 .footerNavItem:hover {
     text-decoration: underline;
+    text-decoration-color: var(--offwhite-color);
 }

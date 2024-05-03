@@ -12,7 +12,6 @@ export default function Header() {
                 <SearchBar />
                 <LoginButton />
             </div>
-
             <Categories />
         </header>
     )

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styles from './Categories.module.css'
 
 /* Meio-Ambiente

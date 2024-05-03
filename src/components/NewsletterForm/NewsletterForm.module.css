@@ -1,0 +1,47 @@
+.newsletter {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 280px;
+    gap: .8rem;
+}
+
+.newsletter h4 {
+    color: var(--white-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    /* margin-bottom: 2rem; */
+}
+
+.newsletter p {
+    color: var(--white-color);
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: left !important;
+}
+
+.newsletter input {
+    background-color: var(--white-color);
+    color: var(--black-color);
+    width: 100%;
+    padding: .8rem;
+    /* margin-bottom: 2rem; */
+    border: none;
+    border-radius: .3rem;
+    outline: none;
+}
+
+.newsletter button {
+    background-color: transparent;
+    color: var(--white-color);
+    font-weight: 600;
+    padding: .5rem 2rem;
+    border: 2px solid var(--white-color);
+    border-radius: .3rem;
+}
+
+.newsletter button:hover {
+    background-color: var(--primary-color-hover);
+    cursor: pointer;
+}

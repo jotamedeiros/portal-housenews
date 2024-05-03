@@ -1,8 +1,11 @@
 /* Estilizações do campo de pesquisa */
+.searchContainer {
+    width: 500px;
+}
+
 .inputSearch {
-    width: 22rem;
-    height: .9rem;
-    padding: .8rem 1rem;
+    width: 100%;
+    padding: .8rem .5rem;
     border: 2px solid var(--white-color);
     border-radius: .3rem;
 }
