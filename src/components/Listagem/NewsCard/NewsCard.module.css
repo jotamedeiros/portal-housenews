@@ -16,7 +16,7 @@
     margin-bottom: 1.5rem;
     border: 1px solid rgba(0, 0, 0, 0.060);
     border-radius: .8rem;
-    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.28);
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
     transition: .3s;
     cursor: pointer;
 }
