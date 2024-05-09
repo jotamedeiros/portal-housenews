@@ -1,23 +1,39 @@
 /* eslint-disable react/prop-types */
 import styles from './Categories.module.css'
 
-/* Meio-Ambiente
-Geopolítica
-Comportamento
-Saúde
-Ásia
-I.A
-Extraterrestres
-*/
-
 const categories = [
-    'Meio-Ambiente',
-    'Geopolítica',
-    'Comportamento',
-    'Saúde',
-    'Ásia',
-    'I.A',
-    'Extraterrestres',
+    {
+        name: 'Esportes',
+        url: '/cat1'
+    },
+    {
+        name: 'Meio-Ambiente',
+        url: '/cat2'
+    },
+    {
+        name: 'Geopolítica',
+        url: '/cat3'
+    },
+    {
+        name: 'Comportamento',
+        url: '/cat4'
+    },
+    {
+        name: 'Saúde',
+        url: '/cat5'
+    },
+    {
+        name: 'Ásia',
+        url: '/cat6'
+    },
+    {
+        name: 'I.A',
+        url: '/cat7'
+    },
+    {
+        name: 'Extraterrestres',
+        url: '/cat8'
+    },
 ]
 
 export default function Categories({ orientation = 'horizontal' }) {
@@ -31,8 +47,8 @@ export default function Categories({ orientation = 'horizontal' }) {
             <ul className={styles.navList}>
                 {
                     categories.map((categorie, i) => (
-                        <a className={styles.navItem} href="#" key={i}>
-                            <li>{categorie}</li>
+                        <a className={styles.navItem} href={categorie.url} key={i}>
+                            <li>{categorie.name}</li>
                         </a>
                     ))
                 }
@@ -43,8 +59,8 @@ export default function Categories({ orientation = 'horizontal' }) {
             <ul className={styles.footerNavList}>
                 {
                     col1.map((categorie, i) => (
-                        <a className={styles.footerNavItem} href="#" key={i}>
-                            <li>{categorie}</li>
+                        <a className={styles.footerNavItem} href={categorie.url} key={i}>
+                            <li>{categorie.name}</li>
                         </a>
                     ))
                 }
@@ -52,8 +68,8 @@ export default function Categories({ orientation = 'horizontal' }) {
             <ul className={styles.footerNavList}>
                 {
                     col2.map((categorie, i) => (
-                        <a className={styles.footerNavItem} href="#" key={i}>
-                            <li>{categorie}</li>
+                        <a className={styles.footerNavItem} href={categorie.url} key={i}>
+                            <li>{categorie.name}</li>
                         </a>
                     ))
                 }

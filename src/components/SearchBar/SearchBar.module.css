@@ -5,9 +5,10 @@
 
 .inputSearch {
     width: 100%;
-    padding: .8rem .5rem;
-    border: 2px solid var(--white-color);
+    padding: .8rem;
+    border: none;
     border-radius: .3rem;
+    outline: none;
 }
 
 .iconSearch {

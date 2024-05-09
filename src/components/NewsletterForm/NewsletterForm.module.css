@@ -22,11 +22,9 @@
 }
 
 .newsletter input {
-    background-color: var(--white-color);
     color: var(--black-color);
     width: 100%;
     padding: .8rem;
-    /* margin-bottom: 2rem; */
     border: none;
     border-radius: .3rem;
     outline: none;
