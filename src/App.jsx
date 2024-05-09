@@ -1,15 +1,17 @@
-import { useState } from 'react'
-import { useEffect } from 'react'
-import Footer from "./components/Footer/Footer"
-import Header from "./components/Header/Header"
-import Listagem from "./components/Listagem/Listagem"
-import gdelt from './gdelt'
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+// import Listagem from "./components/Listagem/Listagem"
+// import { useState } from 'react'
+// import { useEffect } from 'react'
+// import gdelt from './gdelt'
+import { Outlet } from "react-router-dom";
 
 function App() {
-  const [articles, setArticles] = useState([])
-  const [loading, setLoading] = useState(false)
+//   const [articles, setArticles] = useState([])
+//   const [loading, setLoading] = useState(false)
 
   // executa requisição p/ API gdelt
+  /*
   useEffect(() => {
       if (!loading) {
           setLoading(true)
@@ -37,11 +39,12 @@ function App() {
           })
       }
   }, [loading])
+  */
 
   return (
     <>
       <Header />
-      <Listagem articles={articles} />
+      <Outlet />
       <Footer />
     </>
   )
