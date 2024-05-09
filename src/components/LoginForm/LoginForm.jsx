@@ -1,9 +1,14 @@
 import styles from './LoginForm.module.css'
+// import { useNavigate } from 'react-router-dom';
 
 export default function LoginForm() {
-    const handleSubmit = (evt) => {
-        evt.preventDefault();
-    };
+    // const navigate = useNavigate();
+
+    // const handleSubmit = (evt) => {
+    //     evt.preventDefault();
+    //     console.log('Login realizado com sucesso!');
+    //     return navigate('/');
+    // };
 
     return (
         <>
