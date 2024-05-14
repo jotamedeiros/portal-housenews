@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styles from './LoginForm.module.css'
 // import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +16,7 @@ export default function LoginForm() {
             <main>
                 <div className={styles.loginContainer}>
                     <h2>Entre em sua conta</h2>
-                    <p>Não tem uma conta? <a href="#">Cadastre-se agora</a></p>
+                    <p>Não tem uma conta? <Link to='/registration'>Cadastre-se agora</Link></p>
                     <hr />
                     <form>
                         <div className={styles.inputContainer}>
