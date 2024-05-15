@@ -1,7 +1,40 @@
-import { Link } from 'react-router-dom';
 import styles from './RegistrationForm.module.css';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { auth } from '../../firebase/firebase';
+import {  createUserWithEmailAndPassword  } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 export default function RegistrationForm() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
+    const handleCreateUser = async (e) => {
+        e.preventDefault()
+
+        await createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                console.log(user);
+                alert('Conta criada com sucesso!')
+                navigate("/login")
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+                if (error.code === "auth/email-already-in-use") {
+                    window.alert("Erro - Email já cadastrado!");
+                } else if (error.code === "auth/invalid-email") {
+                    window.alert("Erro - Email inválido!");
+                }
+                // ..
+            });
+    }
+
     return (
         <>
             <main>
@@ -13,11 +46,11 @@ export default function RegistrationForm() {
                         <div className={styles.registrationFormName}>
                             <div className={`fixed-class ${styles.inputContainer} var-class ${styles.firstName}`}>
                                 <label htmlFor="firstName">Primeiro nome</label>
-                                <input type="text" name="firstName" id="firstName" placeholder='Seu nome' required />
+                                <input type="text" name="firstName" id="firstName" placeholder='Seu nome' />
                             </div>
                             <div className={`fixed-class ${styles.inputContainer} var-class ${styles.lastName}`}>
                                 <label htmlFor="lastName">Último nome</label>
-                                <input type="text" name="lastName" id="lastName" placeholder='Seu sobrenome' required />
+                                <input type="text" name="lastName" id="lastName" placeholder='Seu sobrenome' />
                             </div>
                         </div>
 
@@ -27,18 +60,18 @@ export default function RegistrationForm() {
                         </div>
 
                         <div className={styles.inputContainer}>
-                            <label htmlFor="email">Endereço de email</label>
-                            <input type="email" name="email" id="email" placeholder='Seu email' required />
+                            <label htmlFor="f_email">Endereço de email</label>
+                            <input type="email" name="f_email" id="f_email" placeholder='Seu email' onChange={(evt) => setEmail(evt.target.value)} required />
                         </div>
 
                         <div className={styles.inputContainer}>
-                            <label htmlFor="password">Senha</label>
-                            <input type="password" name="password" id="password" placeholder='Sua senha' minLength='8' required />
+                            <label htmlFor="f_password">Senha</label>
+                            <input type="password" name="f_password" id="f_password" placeholder='Sua senha' minLength='8' onChange={(evt) => setPassword(evt.target.value)} required />
                         </div>
 
                         <div className={styles.inputContainer}>
                             <label htmlFor="checkPassword">Confirme a senha</label>
-                            <input type="password" name="checkPassword" id="checkPassword" placeholder='Confirme sua senha' minLength='8' required />
+                            <input type="password" name="check_password" id="check_password" placeholder='Confirme sua senha' minLength='8' />
                         </div>
 
                         <div className={styles.inputContainer}>
@@ -47,11 +80,11 @@ export default function RegistrationForm() {
                         </div>
 
                         <div className={styles.lgpdCheck}>
-                            <input type="checkbox" name="lgpdCheck" id="lgpdCheck" required />
+                            <input type="checkbox" name="lgpdCheck" id="lgpdCheck" />
                             <label htmlFor="lgpdCheck">Declaro e estou ciente que, para todos os fins de direito e privacidade, sou maior de 12 (doze) anos, e possuo plena capacidade civil, centro das minhas limitações legais, e autorizo a House News a tratar meus dados pessoais aqui inseridos (“Informações”). Neste ato, indico que estou plenamente ciente e de acordo que as Informações aqui compartilhadas serão controladas e tratadas inteiramente pela House News, na forma de suas Políticas de Privacidade e aceito os <a href="#">termos e condições de acesso</a>.</label>
                         </div>
 
-                        <button type="submit">Criar conta</button>
+                        <button onClick={handleCreateUser} type="submit">Criar conta</button>
 
                         <p className={styles.optionalObs}><span className={styles.optional}>*</span> Preenchimento do campo opcional.</p>
                     </form>

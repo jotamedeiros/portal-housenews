@@ -1,15 +1,31 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase/firebase';
 import styles from './LoginForm.module.css'
-// import { useNavigate } from 'react-router-dom';
 
 export default function LoginForm() {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    // const handleSubmit = (evt) => {
-    //     evt.preventDefault();
-    //     console.log('Login realizado com sucesso!');
-    //     return navigate('/');
-    // };
+    const handleSignIn = (e) => {
+        e.preventDefault();
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            navigate("/")
+            console.log(user);
+            console.log('usuário logado com sucesso!')
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+            console.log('deu merda')
+        });
+    }
 
     return (
         <>
@@ -20,16 +36,16 @@ export default function LoginForm() {
                     <hr />
                     <form>
                         <div className={styles.inputContainer}>
-                            <label htmlFor="email">Endereço de email</label>
-                            <input type="email" name="email" id="email" placeholder='Seu email' required />
+                            <label htmlFor="f_email">Endereço de email</label>
+                            <input type="email" name="f_email" id="f_email" placeholder='Seu email' onChange={(evt) => setEmail(evt.target.value)} required />
                         </div>
 
                         <div className={styles.inputContainer}>
-                            <label htmlFor="password">Senha</label>
-                            <input type="password" name="password" id="password" placeholder='Sua senha' minLength='8' required />
+                            <label htmlFor="f_password">Senha</label>
+                            <input type="password" name="f_password" id="f_password" placeholder='Sua senha' minLength='8' onChange={(evt) => setPassword(evt.target.value)} required />
                         </div>
 
-                        <button type="submit">Login</button>
+                        <button onClick={handleSignIn} type="submit">Login</button>
                     </form>
                 </div>
             </main>
