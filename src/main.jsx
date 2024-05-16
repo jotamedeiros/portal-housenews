@@ -8,6 +8,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Homepage from './routes/Homepage/Homepage.jsx';
 import Login from './routes/Login/Login.jsx';
 import Registration from './routes/Registration/Registration.jsx';
+import NewPost from './routes/NewPost/NewPost.jsx';
+
 
 
 // const router = createBrowserRouter([
@@ -38,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: '/registration',
         element: <Registration />,
+      },
+      {
+        path: '/newpost',
+        element: <NewPost />
       },
     ]
   },

@@ -15,7 +15,7 @@ export default function LoginForm() {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            navigate("/")
+            navigate("/newpost")
             console.log(user);
             console.log('usuário logado com sucesso!')
         })
@@ -23,7 +23,11 @@ export default function LoginForm() {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
-            console.log('deu merda')
+            if (errorCode === "auth/invalid-credential") {
+                window.alert("Erro - Email ou Senha incorretos!");
+            } else if (errorCode === "auth/invalid-email") {
+                window.alert("Erro - O email precisa ser válido!");
+            }
         });
     }
 
