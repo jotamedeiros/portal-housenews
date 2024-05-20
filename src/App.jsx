@@ -1,10 +1,10 @@
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import { Outlet } from "react-router-dom";
 // import Listagem from "./components/Listagem/Listagem"
 // import { useState } from 'react'
 // import { useEffect } from 'react'
 // import gdelt from './gdelt'
-import { Outlet } from "react-router-dom";
 
 function App() {
 //   const [articles, setArticles] = useState([])

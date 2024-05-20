@@ -9,6 +9,7 @@ import Homepage from './routes/Homepage/Homepage.jsx';
 import Login from './routes/Login/Login.jsx';
 import Registration from './routes/Registration/Registration.jsx';
 import NewPost from './routes/NewPost/NewPost.jsx';
+import UserLobby from './routes/UserLobby/UserLobby.jsx';
 
 
 
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: '/newpost',
         element: <NewPost />
+      },
+      {
+        path: '/userlobby',
+        element: <UserLobby />
       },
     ]
   },
