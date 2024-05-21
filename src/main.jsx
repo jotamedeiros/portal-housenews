@@ -10,6 +10,7 @@ import Login from './routes/Login/Login.jsx';
 import Registration from './routes/Registration/Registration.jsx';
 import NewPost from './routes/NewPost/NewPost.jsx';
 import UserLobby from './routes/UserLobby/UserLobby.jsx';
+import UserSetttings from './routes/UserSettings/UserSettings.jsx';
 
 
 
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: '/userlobby',
         element: <UserLobby />
+      },
+      {
+        path: '/usersettings',
+        element: <UserSetttings />
       },
     ]
   },

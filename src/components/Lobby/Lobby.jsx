@@ -16,7 +16,7 @@ export default function Lobby() {
                         <h3>Página Inicial</h3>
                     </Link>
 
-                    <Link to={'/'} className={`${styles.lobbyOption} ${styles.optPerfil}`}>
+                    <Link to={'/usersettings'} className={`${styles.lobbyOption} ${styles.optPerfil}`}>
                         <img src='' alt="Ícone Configurações de Perfil" />
                         <h3>Configurações de Perfil</h3>
                     </Link>
