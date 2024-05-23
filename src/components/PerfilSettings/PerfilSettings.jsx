@@ -1,6 +1,5 @@
 import styles from './PerfilSettings.module.css';
 import edit from '../../assets/icons/actions/edit-red-24.png';
-import save from '../../assets/icons/actions/save-red-24.png';
 import { useState } from 'react';
 
 export default function PerfilSettings({ name, nickname, email, password, phone, xUrl, facebookUrl, instagramUrl, telegramUrl }) {
@@ -10,6 +9,38 @@ export default function PerfilSettings({ name, nickname, email, password, phone,
     const [perfilEmail, setPerfilEmail] = useState(email);
     const [perfilPassword, setPerfilPassword] = useState(password);
     const [perfilPhone, setPerfilPhone] = useState(phone);
+    const [perfilTwitter, setPerfilTwitter] = useState(xUrl);
+    const [perfilFacebook, setPerfilFacebook] = useState(facebookUrl);
+    const [perfilInstagram, setPerfilInstagram] = useState(instagramUrl);
+    const [perfilTelegram, setPerfilTelegram] = useState(telegramUrl);
+
+    // Função que salva alterações feitas no perfil do usuário.
+    function handleUpdateFields(evt) {
+        evt.preventDefault();
+        if (perfilName.length > 0 && perfilNickname.length > 0 && perfilEmail.length > 0 && perfilPassword.length >= 8) {
+            const perfilNameField = document.querySelector('#f_perfilName');
+            perfilNameField.setAttribute('disabled', 'disabled');
+            const perfilNicknameField = document.querySelector('#f_perfilNickname');
+            perfilNicknameField.setAttribute('disabled', 'disabled');
+            const perfilEmailField = document.querySelector('#f_perfilEmail');
+            perfilEmailField.setAttribute('disabled', 'disabled');
+            const perfilPasswordField = document.querySelector('#f_perfilPassword');
+            perfilPasswordField.setAttribute('disabled', 'disabled');
+            const perfilPhoneField = document.querySelector('#f_perfilPhone');
+            perfilPhoneField.setAttribute('disabled', 'disabled');
+            const perfilTwitterField = document.querySelector('#f_perfilTwitter');
+            perfilTwitterField.setAttribute('disabled', 'disabled');
+            const perfilFacebookField = document.querySelector('#f_perfilFacebook');
+            perfilFacebookField.setAttribute('disabled', 'disabled');
+            const perfilInstagramField = document.querySelector('#f_perfilInstagram');
+            perfilInstagramField.setAttribute('disabled', 'disabled');
+            const perfilTelegramField = document.querySelector('#f_perfilTelegram');
+            perfilTelegramField.setAttribute('disabled', 'disabled');
+            alert('As alterações foram salvas com sucesso!')
+        } else {
+            alert('Você precisa preencher todos os campos corretamente!')
+        }
+    }
 
 
     // Funções de manipulação do campo 'Nome'.
@@ -22,18 +53,6 @@ export default function PerfilSettings({ name, nickname, email, password, phone,
 
     function handleChangeName(evt) {
         setPerfilName(evt.target.value);
-    }
-
-    function handleUpdateName() {
-        if (perfilName.length > 0) {
-            alert(`Nome do usuário alterado para "${perfilName}" com sucesso!`);
-            const perfilNameField = document.querySelector('#f_perfilName');
-            perfilNameField.setAttribute('disabled', 'disabled');
-        } else {
-            alert(`ERRO: O campo "Nome" precisa ser preenchido.`)
-            const perfilNameField = document.querySelector('#f_perfilName');
-            perfilNameField.focus();
-        }
     }
 
 
@@ -49,12 +68,6 @@ export default function PerfilSettings({ name, nickname, email, password, phone,
         setPerfilNickname(evt.target.value);
     }
 
-    function handleUpdateNickname() {
-        alert(`Apelido do usuário alterado para "${perfilNickname}" com sucesso!`);
-        const perfilNicknameField = document.querySelector('#f_perfilNickname');
-        perfilNicknameField.setAttribute('disabled', 'disabled');
-    }
-
 
     // Funções de manipulação do campo 'Email'.
     function handleEnableEmailField() {
@@ -66,12 +79,6 @@ export default function PerfilSettings({ name, nickname, email, password, phone,
 
     function handleChangeEmail(evt) {
         setPerfilEmail(evt.target.value);
-    }
-
-    function handleUpdateEmail() {
-        alert(`Email do usuário alterado para "${perfilEmail}" com sucesso!`);
-        const perfilEmailField = document.querySelector('#f_perfilEmail');
-        perfilEmailField.setAttribute('disabled', 'disabled');
     }
 
 
@@ -87,12 +94,6 @@ export default function PerfilSettings({ name, nickname, email, password, phone,
         setPerfilPassword(evt.target.value);
     }
 
-    function handleUpdatePassword() {
-        alert(`Senha do usuário alterada com sucesso!`);
-        const perfilPasswordField = document.querySelector('#f_perfilPassword');
-        perfilPasswordField.setAttribute('disabled', 'disabled');
-    }
-
 
     // Funções de manipulação do campo 'Phone'.
     function handleEnablePhoneField() {
@@ -106,10 +107,56 @@ export default function PerfilSettings({ name, nickname, email, password, phone,
         setPerfilPhone(evt.target.value);
     }
 
-    function handleUpdatePhone() {
-        alert(`Celular do usuário alterado com sucesso!`);
-        const perfilPhoneField = document.querySelector('#f_perfilPhone');
-        perfilPhoneField.setAttribute('disabled', 'disabled');
+
+    // Funções de manipulação do campo 'Twitter'.
+    function handleEnableTwitterField() {
+        const perfilTwitterField = document.querySelector('#f_perfilTwitter');
+        perfilTwitterField.removeAttribute('disabled');
+        setPerfilTwitter('');
+        perfilTwitterField.focus();
+    }
+
+    function handleChangeTwitter(evt) {
+        setPerfilTwitter(evt.target.value);
+    }
+
+
+    // Funções de manipulação do campo 'Facebook'.
+    function handleEnableFacebookField() {
+        const perfilFacebookField = document.querySelector('#f_perfilFacebook');
+        perfilFacebookField.removeAttribute('disabled');
+        setPerfilFacebook('');
+        perfilFacebookField.focus();
+    }
+
+    function handleChangeFacebook(evt) {
+        setPerfilFacebook(evt.target.value);
+    }
+
+
+    // Funções de manipulação do campo 'Instagram'.
+    function handleEnableInstagramField() {
+        const perfilInstagramField = document.querySelector('#f_perfilInstagram');
+        perfilInstagramField.removeAttribute('disabled');
+        setPerfilInstagram('');
+        perfilInstagramField.focus();
+    }
+
+    function handleChangeInstagram(evt) {
+        setPerfilInstagram(evt.target.value);
+    }
+
+
+    // Funções de manipulação do campo 'Telegram'.
+    function handleEnableTelegramField() {
+        const perfilTelegramField = document.querySelector('#f_perfilTelegram');
+        perfilTelegramField.removeAttribute('disabled');
+        setPerfilTelegram('');
+        perfilTelegramField.focus();
+    }
+
+    function handleChangeTelegram(evt) {
+        setPerfilTelegram(evt.target.value);
     }
 
     return (
@@ -128,7 +175,6 @@ export default function PerfilSettings({ name, nickname, email, password, phone,
                                 <div className={styles.perfilFieldInfos}>
                                     <input type="text" name="f_perfilName" id="f_perfilName" value={perfilName} onChange={handleChangeName} disabled />
                                     <img src={edit} alt="ícone Editar Informação" onClick={handleEnableNameField} />
-                                    <img src={save} alt="Ícone Salvar Alteração" onClick={handleUpdateName} />
                                 </div>
                             </div>
                             <div className={styles.perfilField}>
@@ -136,7 +182,6 @@ export default function PerfilSettings({ name, nickname, email, password, phone,
                                 <div className={styles.perfilFieldInfos}>
                                     <input type="text" name="f_perfilNickname" id="f_perfilNickname" value={perfilNickname} onChange={handleChangeNickname} disabled />
                                     <img src={edit} alt="ícone Editar Informação" onClick={handleEnableNicknameField} />
-                                    <img src={save} alt="Ícone Salvar Alteração" onClick={handleUpdateNickname} />
                                 </div>
                             </div>
                             <div className={styles.perfilField}>
@@ -144,7 +189,6 @@ export default function PerfilSettings({ name, nickname, email, password, phone,
                                 <div className={styles.perfilFieldInfos}>
                                     <input type="email" name="f_perfilEmail" id="f_perfilEmail" value={perfilEmail} onChange={handleChangeEmail} disabled />
                                     <img src={edit} alt="ícone Editar Informação" onClick={handleEnableEmailField} />
-                                    <img src={save} alt="Ícone Salvar Alteração" onClick={handleUpdateEmail} />
                                 </div>
                             </div>
                             <div className={styles.perfilField}>
@@ -152,7 +196,6 @@ export default function PerfilSettings({ name, nickname, email, password, phone,
                                 <div className={styles.perfilFieldInfos}>
                                     <input type="password" name="f_perfilPassword" id="f_perfilPassword" value={perfilPassword} onChange={handleChangePassword} disabled />
                                     <img src={edit} alt="ícone Editar Informação" onClick={handleEnablePasswordField} />
-                                    <img src={save} alt="Ícone Salvar Alteração" onClick={handleUpdatePassword} />
                                 </div>
                             </div>
                             <div className={styles.perfilField}>
@@ -160,10 +203,37 @@ export default function PerfilSettings({ name, nickname, email, password, phone,
                                 <div className={styles.perfilFieldInfos}>
                                     <input type="tel" name="f_perfilPhone" id="f_perfilPhone" value={perfilPhone} onChange={handleChangePhone} pattern='/^(?:\+)[0-9]{2}\s?(?:\()[0-9]{2}(?:\))\s?[0-9]{4,5}(?:-)[0-9]{4}$/' maxLength='17' disabled />
                                     <img src={edit} alt="ícone Editar Informação" onClick={handleEnablePhoneField} />
-                                    <img src={save} alt="Ícone Salvar Alteração" onClick={handleUpdatePhone} />
                                 </div>
                             </div>
-                            {/* <button className={styles.sendChangesButton} type="submit">Salvar alterações</button> */}
+                            <div className={styles.perfilField}>
+                                <label htmlFor="f_perfilTwitter">Twitter</label>
+                                <div className={styles.perfilFieldInfos}>
+                                    <input type="text" name="f_perfilTwitter" id="f_perfilTwitter" value={perfilTwitter} onChange={handleChangeTwitter} disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick={handleEnableTwitterField} />
+                                </div>
+                            </div>
+                            <div className={styles.perfilField}>
+                                <label htmlFor="f_perfilFacebook">Facebook</label>
+                                <div className={styles.perfilFieldInfos}>
+                                    <input type="text" name="f_perfilFacebook" id="f_perfilFacebook" value={perfilFacebook} onChange={handleChangeFacebook} disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick={handleEnableFacebookField} />
+                                </div>
+                            </div>
+                            <div className={styles.perfilField}>
+                                <label htmlFor="f_perfilInstagram">Instagram</label>
+                                <div className={styles.perfilFieldInfos}>
+                                    <input type="text" name="f_perfilInstagram" id="f_perfilInstagram" value={perfilInstagram} onChange={handleChangeInstagram} disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick={handleEnableInstagramField} />
+                                </div>
+                            </div>
+                            <div className={styles.perfilField}>
+                                <label htmlFor="f_perfilTelegram">Telegram</label>
+                                <div className={styles.perfilFieldInfos}>
+                                    <input type="text" name="f_perfilTelegram" id="f_perfilTelegram" value={perfilTelegram} onChange={handleChangeTelegram} disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick={handleEnableTelegramField} />
+                                </div>
+                            </div>
+                            <button className={styles.sendChangesButton} type="submit" onClick={handleUpdateFields}>Salvar alterações</button>
                         </div>
                     </div>
                 </form>
