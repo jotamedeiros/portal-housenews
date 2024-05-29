@@ -37,11 +37,14 @@ export default function RegistrationForm() {
 
     return (
         <>
-            <main>
-                <div className={styles.registrationContainer}>
-                    <h2>Crie sua conta</h2>
-                    <p>Já tem uma conta? <Link to='/login'>Acesse aqui</Link></p>
+            <main className={styles.mainRegistrationForm}>
+                <div className={styles.mainText}>
+                    <h1 className={styles.mainTitle}>Crie sua conta</h1>
+                    <p className={styles.mainSubtitle}>Criando sua conta você poderá publicar e compartilhar as notícias postadas aqui no House News.</p>
+                    <p className={styles.mainRegistrationLink}>Já tem uma conta? <Link to='/login'>Acesse aqui</Link></p>
                     <hr />
+                </div>
+                <div className={styles.registrationContainer}>
                     <form>
                         <div className={styles.registrationFormName}>
                             <div className={`fixed-class ${styles.inputContainer} var-class ${styles.firstName}`}>
@@ -81,7 +84,7 @@ export default function RegistrationForm() {
 
                         <div className={styles.lgpdCheck}>
                             <input type="checkbox" name="lgpdCheck" id="lgpdCheck" />
-                            <label htmlFor="lgpdCheck">Declaro e estou ciente que, para todos os fins de direito e privacidade, sou maior de 12 (doze) anos, e possuo plena capacidade civil, centro das minhas limitações legais, e autorizo a House News a tratar meus dados pessoais aqui inseridos (“Informações”). Neste ato, indico que estou plenamente ciente e de acordo que as Informações aqui compartilhadas serão controladas e tratadas inteiramente pela House News, na forma de suas Políticas de Privacidade e aceito os <a href="#">termos e condições de acesso</a>.</label>
+                            <label htmlFor="lgpdCheck">Declaro e estou ciente que, para todos os fins de direito e privacidade, sou maior de 12 (doze) anos, e possuo plena capacidade civil, dentro das minhas limitações legais, e autorizo a House News a tratar meus dados pessoais aqui inseridos (“Informações”). Neste ato, indico que estou plenamente ciente e de acordo que as Informações aqui compartilhadas serão controladas e tratadas inteiramente pela House News, na forma de suas Políticas de Privacidade e aceito os <a href="#">termos e condições de acesso</a>.</label>
                         </div>
 
                         <button onClick={handleCreateUser} type="submit">Criar conta</button>

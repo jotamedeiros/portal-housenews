@@ -34,10 +34,12 @@ export default function LoginForm() {
     return (
         <>
             <main>
-                <div className={styles.loginContainer}>
-                    <h2>Entre em sua conta</h2>
-                    <p>Não tem uma conta? <Link to='/registration'>Cadastre-se agora</Link></p>
+                <div className={styles.mainText}>
+                    <h1 className={styles.mainTitle}>Entre em sua conta</h1>
+                    <p className={styles.mainSubtitle}>Faça login para postar e compartilhar novas notícias, adquirir pacotes ou gerenciar suas informações de perfil.</p>
                     <hr />
+                </div>
+                <div className={styles.loginContainer}>
                     <form>
                         <div className={styles.inputContainer}>
                             <label htmlFor="f_email">Endereço de email</label>

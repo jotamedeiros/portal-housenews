@@ -3,11 +3,17 @@ import styles from './NewPostForm.module.css'
 export default function NewPostForm() {
     return (
         <>
-                <main>
+                <main className={styles.mainNewPost}>
+                    <div className={styles.mainText}>
+                        <h1 className={styles.mainTitle}>Nova Postagem</h1>
+                        <p className={styles.mainSubtitle}>Crie um novo post e compartilhe suas informações publicando a notícia rapidamente aqui no House News.</p>
+                        <hr />
+                    </div>
                     <div className={styles.NewPostFormContainer}>
                         <form>
                             <label htmlFor="f_categorie">Categoria</label>
                             <select name="f_categorie" id="f_categorie" required>
+                                <option value="" selected disabled>Escolha uma categoria</option>
                                 <option value="esportes">Esportes</option>
                                 <option value="meioambiente">Meio Ambiente</option>
                                 <option value="geopolitica">Geopolítica</option>

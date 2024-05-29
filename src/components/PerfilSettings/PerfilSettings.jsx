@@ -171,14 +171,14 @@ export default function PerfilSettings({ name, nickname, email, password, phone,
                     <div className={styles.perfilSettingsContainer}>
                         <div className={styles.perfilSettingsCard}>
                             <div className={styles.perfilField}>
-                                <label htmlFor="f_perfilName">Nome</label>
+                                <label htmlFor="f_perfilName">Nome Completo</label>
                                 <div className={styles.perfilFieldInfos}>
                                     <input type="text" name="f_perfilName" id="f_perfilName" value={perfilName} onChange={handleChangeName} disabled />
                                     <img src={edit} alt="ícone Editar Informação" onClick={handleEnableNameField} />
                                 </div>
                             </div>
                             <div className={styles.perfilField}>
-                                <label htmlFor="f_perfilNickname">Apelido</label>
+                                <label htmlFor="f_perfilNickname">Nome de Exibição</label>
                                 <div className={styles.perfilFieldInfos}>
                                     <input type="text" name="f_perfilNickname" id="f_perfilNickname" value={perfilNickname} onChange={handleChangeNickname} disabled />
                                     <img src={edit} alt="ícone Editar Informação" onClick={handleEnableNicknameField} />

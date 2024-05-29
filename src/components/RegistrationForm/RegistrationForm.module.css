@@ -1,8 +1,30 @@
 main {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    min-height: 55vh;
+    padding-block: 2rem;
+    gap: 1.5rem;
+}
+
+.mainText {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.mainTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.mainRegistrationLink {
+    font-size: .9rem;
+}
+
+.mainRegistrationLink a {
+    color: var(--primary-color);
 }
 
 .registrationContainer {
@@ -10,10 +32,10 @@ main {
     flex-direction: column;
     flex-wrap: wrap;
     gap: 1rem;
-    width: 615px;
+    width: 850px;
     height: auto;
-    /* margin-block: 2rem; */
-    padding: 1.5rem;
+    margin-block: 1rem;
+    padding: 2rem;
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: .5rem;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
@@ -91,6 +113,14 @@ input:focus {
     font-size: .8rem;
     text-align: justify;
     padding-inline: .5rem;
+}
+
+.lgpdCheck a {
+    color: var(--primary-color);
+}
+
+.lgpdCheck a:hover {
+    color: var(--primary-color-hover);
 }
 
 form button {
