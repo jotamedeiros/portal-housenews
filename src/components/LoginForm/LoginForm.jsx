@@ -37,6 +37,7 @@ export default function LoginForm() {
                 <div className={styles.mainText}>
                     <h1 className={styles.mainTitle}>Entre em sua conta</h1>
                     <p className={styles.mainSubtitle}>Faça login para postar e compartilhar novas notícias, adquirir pacotes ou gerenciar suas informações de perfil.</p>
+                    <p className={styles.mainRegistrationLink}>Ainda não possui uma conta? <Link to='/registration'>Crie sua conta</Link></p>
                     <hr />
                 </div>
                 <div className={styles.loginContainer}>

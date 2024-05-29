@@ -19,11 +19,11 @@ main {
     font-weight: 600;
 }
 
-.mainRegistrationLink {
+.mainLoginLink {
     font-size: .9rem;
 }
 
-.mainRegistrationLink a {
+.mainLoginLink a {
     color: var(--primary-color);
 }
 

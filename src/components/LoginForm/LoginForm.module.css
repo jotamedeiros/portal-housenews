@@ -17,6 +17,14 @@ main {
     font-weight: 600;
 }
 
+.mainRegistrationLink {
+    font-size: .9rem;
+}
+
+.mainRegistrationLink a {
+    color: var(--primary-color);
+}
+
 .loginContainer {
     display: flex;
     flex-direction: column;

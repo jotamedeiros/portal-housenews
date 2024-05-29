@@ -41,7 +41,7 @@ export default function RegistrationForm() {
                 <div className={styles.mainText}>
                     <h1 className={styles.mainTitle}>Crie sua conta</h1>
                     <p className={styles.mainSubtitle}>Criando sua conta você poderá publicar e compartilhar as notícias postadas aqui no House News.</p>
-                    <p className={styles.mainRegistrationLink}>Já tem uma conta? <Link to='/login'>Acesse aqui</Link></p>
+                    <p className={styles.mainLoginLink}>Já tem uma conta? <Link to='/login'>Acesse aqui</Link></p>
                     <hr />
                 </div>
                 <div className={styles.registrationContainer}>
