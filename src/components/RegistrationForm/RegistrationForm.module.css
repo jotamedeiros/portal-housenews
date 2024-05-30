@@ -90,14 +90,6 @@ input:focus {
     gap: 1rem;
 }
 
-.firstName {
-    width: 100%;
-}
-
-.lastName {
-    width: 100%;
-}
-
 .lgpdCheck {
     display: flex;
     justify-content: center;

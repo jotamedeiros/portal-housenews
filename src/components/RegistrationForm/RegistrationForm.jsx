@@ -1,14 +1,17 @@
 import styles from './RegistrationForm.module.css';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { auth } from '../../firebase/firebase';
+import { Link, useNavigate } from 'react-router-dom';
+import { auth, db } from '../../firebase/firebase';
+import { collection, addDoc } from "firebase/firestore";
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
 
 export default function RegistrationForm() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+    const [name, setName] = useState('');
+    const [nickname, setNickname] = useState('');
+    const [phone, setPhone] = useState('');
 
     const handleCreateUser = async (e) => {
         e.preventDefault()
@@ -17,7 +20,16 @@ export default function RegistrationForm() {
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
+                const docRef = addDoc(collection(db, "users"), {
+                    uid: user.uid,
+                    name: name,
+                    nickname: nickname,
+                    email: email,
+                    password: password,
+                    phone: phone,
+                })
                 console.log(user);
+                console.log(docRef);
                 alert('Conta criada com sucesso!')
                 navigate("/login")
                 // ...
@@ -46,20 +58,14 @@ export default function RegistrationForm() {
                 </div>
                 <div className={styles.registrationContainer}>
                     <form>
-                        <div className={styles.registrationFormName}>
-                            <div className={`fixed-class ${styles.inputContainer} var-class ${styles.firstName}`}>
-                                <label htmlFor="firstName">Primeiro nome</label>
-                                <input type="text" name="firstName" id="firstName" placeholder='Seu nome' />
-                            </div>
-                            <div className={`fixed-class ${styles.inputContainer} var-class ${styles.lastName}`}>
-                                <label htmlFor="lastName">Último nome</label>
-                                <input type="text" name="lastName" id="lastName" placeholder='Seu sobrenome' />
-                            </div>
+                        <div className={styles.inputContainer}>
+                            <label htmlFor="f_name">Nome Completo</label>
+                            <input type="text" name="f_name" id="f_name" placeholder='Seu nome' onChange={(evt) => setName(evt.target.value)} required />
                         </div>
 
                         <div className={styles.inputContainer}>
-                            <label htmlFor="nickname">Apelido<span className={styles.optional}>*</span></label>
-                            <input type="text" name="nickname" id="nickname" placeholder='Como você quer ser chamado(a) ?' />
+                            <label htmlFor="f_nickname">Nome de Exibição</label>
+                            <input type="text" name="f_nickname" id="f_nickname" placeholder='Como você quer ser chamado(a) ?' onChange={(evt) => setNickname(evt.target.value)} required />
                         </div>
 
                         <div className={styles.inputContainer}>
@@ -73,18 +79,18 @@ export default function RegistrationForm() {
                         </div>
 
                         <div className={styles.inputContainer}>
-                            <label htmlFor="checkPassword">Confirme a senha</label>
+                            <label htmlFor="check_password">Confirme a senha</label>
                             <input type="password" name="check_password" id="check_password" placeholder='Confirme sua senha' minLength='8' />
                         </div>
 
                         <div className={styles.inputContainer}>
-                            <label htmlFor="phone">Celular<span className={styles.optional}>*</span></label>
-                            <input type="tel" name="phone" id="phone" pattern='/^(?:\+)[0-9]{2}\s?(?:\()[0-9]{2}(?:\))\s?[0-9]{4,5}(?:-)[0-9]{4}$/' placeholder='Ex: +XX (XX) XXXXX-XXXX' maxLength='17' />
+                            <label htmlFor="f_phone">Celular<span className={styles.optional}>*</span></label>
+                            <input type="tel" name="f_phone" id="f_phone" pattern='/^(?:\+)[0-9]{2}\s?(?:\()[0-9]{2}(?:\))\s?[0-9]{4,5}(?:-)[0-9]{4}$/' placeholder='Ex: +XX (XX) XXXXX-XXXX' maxLength='17' onChange={(evt) => setPhone(evt.target.value)} />
                         </div>
 
                         <div className={styles.lgpdCheck}>
-                            <input type="checkbox" name="lgpdCheck" id="lgpdCheck" />
-                            <label htmlFor="lgpdCheck">Declaro e estou ciente que, para todos os fins de direito e privacidade, sou maior de 12 (doze) anos, e possuo plena capacidade civil, dentro das minhas limitações legais, e autorizo a House News a tratar meus dados pessoais aqui inseridos (“Informações”). Neste ato, indico que estou plenamente ciente e de acordo que as Informações aqui compartilhadas serão controladas e tratadas inteiramente pela House News, na forma de suas Políticas de Privacidade e aceito os <a href="#">termos e condições de acesso</a>.</label>
+                            <input type="checkbox" name="lgpdCheck" id="lgpdCheck" required />
+                            <label htmlFor="lgpdCheck">Declaro e estou ciente que, para todos os fins de direito e privacidade, sou maior de 18 (dezoito) anos, e possuo plena capacidade civil, dentro das minhas limitações legais, e autorizo a House News a tratar meus dados pessoais aqui inseridos (“Informações”). Neste ato, indico que estou plenamente ciente e de acordo que as Informações aqui compartilhadas serão controladas e tratadas inteiramente pela House News, na forma de suas Políticas de Privacidade e aceito os <a href="#">termos e condições de acesso</a>.</label>
                         </div>
 
                         <button onClick={handleCreateUser} type="submit">Criar conta</button>
