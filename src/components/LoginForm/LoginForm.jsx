@@ -15,7 +15,7 @@ export default function LoginForm() {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            navigate("/userlobby")
+            navigate("/userlobby");
             console.log(user);
             console.log('usuário logado com sucesso!')
         })

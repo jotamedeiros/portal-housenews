@@ -13,18 +13,6 @@ import UserLobby from './routes/UserLobby/UserLobby.jsx';
 import UserSetttings from './routes/UserSettings/UserSettings.jsx';
 
 
-
-// const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <Home />,
-//   },
-//   {
-//     path: '/login',
-//     element: <Login />,
-//   }
-// ]);
-
 // Configuração das rotas
 const router = createBrowserRouter([
   {
