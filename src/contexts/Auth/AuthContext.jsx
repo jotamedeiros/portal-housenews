@@ -21,8 +21,13 @@ export const AuthProvider = ({ children }) => {
         return unsubscribe;
     }, []);
 
+    const logout = () => {
+        return auth.signOut();
+    }
+
     const value = {
         currentUser,
+        logout,
     };
 
     return (
