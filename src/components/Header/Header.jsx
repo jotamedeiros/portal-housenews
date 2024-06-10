@@ -2,7 +2,7 @@ import styles from './Header.module.css';
 import Logo from '../Logo/Logo';
 import SearchBar from '../SearchBar/SearchBar';
 import LoginButton from '../LoginButton/LoginButton';
-import LogoutButton from '../LogoutButton/LogoutButton';
+import UserMenu from '../UserMenu/UserMenu';
 import Categories from '../Categories/Categories';
 import { useAuth } from '../../contexts/Auth/AuthContext';
 
@@ -16,7 +16,7 @@ export default function Header() {
                 <SearchBar />
                 {
                     currentUser ? (
-                        <LogoutButton />
+                        <UserMenu />
                     ) : (
                         <LoginButton />
                     )

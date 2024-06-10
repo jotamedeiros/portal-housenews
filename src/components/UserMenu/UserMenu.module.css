@@ -1,0 +1,51 @@
+.userMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.userImgContainer {
+    border-radius: 50%;
+    position: relative;
+}
+
+.closeMenuButton {
+    cursor: pointer;
+}
+
+.userMenuDropdown {
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: var(--white-color);
+    width: 200px;
+    margin: 0;
+    padding: .8rem;
+    border-radius: .5rem;
+    list-style: none;
+    text-align: left;
+    position: absolute;
+    right: -50%;
+    top: calc(100% + 10px);
+    transform: rotateX();
+    transition: all .3s ease-in;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+.userMenuDropdown img {
+    width: 16px;
+    height: 16px;
+}
+
+.userMenuItem {
+    padding: .3rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.userMenuLink {
+    color: #000;
+    font-weight: 500;
+    text-decoration: none !important;
+    cursor: pointer;
+}
