@@ -1,0 +1,29 @@
+.mainNeedLogin {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 7rem;
+    padding-block: 2rem;
+}
+
+.mainText {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+}
+
+.mainTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.needLoginLink {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.needLoginLink:hover {
+    color: var(--primary-color-hover);
+}

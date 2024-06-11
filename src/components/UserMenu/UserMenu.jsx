@@ -31,7 +31,7 @@ export default function UserMenu() {
         <div className={styles.userMenu} >
             <div className={styles.userImgContainer}>
                 <Link to='/userlobby'>
-                    <img src={userImg} alt="Avatar do Usuário" onMouseEnter={handleUserMenu} />
+                    <img className={styles.userAvatar} src={userImg} alt="Avatar do Usuário" onMouseEnter={handleUserMenu} />
                 </Link>
 
                 <ul className={styles.userMenuDropdown} id='userMenuDropdown'>

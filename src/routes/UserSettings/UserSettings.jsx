@@ -1,19 +1,29 @@
 import PerfilSettings from "../../components/PerfilSettings/PerfilSettings";
+import { useAuth } from "../../contexts/Auth/AuthContext";
+import NeedLogin from "../../components/NeedLogin/NeedLogin";
 
 export default function UserSetttings() {
+    const { currentUser } = useAuth();
+
     return (
         <>
-            <PerfilSettings 
-                name={`Pedro da Silva Soares`}
-                nickname={`Pedro Soares`}
-                email={`pedrosilva.soares@gmail.com`}
-                password={`********`}
-                phone={`+XX (XX) XXXXX-XXXX`}
-                xUrl={`https://www.x.com/`}
-                facebookUrl={`https://www.facebook.com/`}
-                instagramUrl={`https://www.instagram.com/`}
-                telegramUrl={`https://www.web.telegram.org/`}
-            />
+            {
+                currentUser ? (
+                    <PerfilSettings 
+                        name={`Pedro da Silva Soares`}
+                        nickname={`Pedro Soares`}
+                        email={`pedrosilva.soares@gmail.com`}
+                        password={`********`}
+                        phone={`+XX (XX) XXXXX-XXXX`}
+                        xUrl={`https://www.x.com/`}
+                        facebookUrl={`https://www.facebook.com/`}
+                        instagramUrl={`https://www.instagram.com/`}
+                        telegramUrl={`https://www.web.telegram.org/`}
+                    />
+                ) : (
+                    <NeedLogin />
+                )
+            }
         </>
     )
 }
