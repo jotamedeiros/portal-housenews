@@ -48,9 +48,17 @@
     border-bottom: 2px solid var(--primary-color);
 }
 
+.userMenuItem p {
+    transition: all .1s ease-in;
+}
+
+.userMenuItem p:hover {
+    transform: translateX(3px);
+}
+
 .userMenuLink {
     color: #000;
-    font-weight: 500;
+    font-weight: 400;
     text-decoration: none !important;
     cursor: pointer;
 }
