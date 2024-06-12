@@ -25,6 +25,12 @@ main {
 
 .mainLoginLink a {
     color: var(--primary-color);
+    text-decoration: none;
+}
+
+.mainLoginLink a:hover {
+    color: var(--primary-color-hover);
+    text-decoration: underline;
 }
 
 .registrationContainer {
@@ -109,10 +115,12 @@ input:focus {
 
 .lgpdCheck a {
     color: var(--primary-color);
+    text-decoration: none;
 }
 
 .lgpdCheck a:hover {
     color: var(--primary-color-hover);
+    text-decoration: underline;
 }
 
 form button {

@@ -23,10 +23,12 @@ main {
 
 .mainRegistrationLink a {
     color: var(--primary-color);
+    text-decoration: none;
 }
 
 .mainRegistrationLink a:hover {
     color: var(--primary-color-hover);
+    text-decoration: underline;
 }
 
 .loginContainer {
@@ -103,8 +105,10 @@ form button:hover {
 
 .resetPasswordLink {
     color: var(--dark-color);
+    text-decoration: none;
 }
 
 .resetPasswordLink:hover {
     color: var(--primary-color-hover);
+    text-decoration: underline;
 }

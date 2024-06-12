@@ -26,4 +26,5 @@
 
 .needLoginLink:hover {
     color: var(--primary-color-hover);
+    text-decoration: underline;
 }
