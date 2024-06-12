@@ -53,6 +53,8 @@ export default function LoginForm() {
                         </div>
 
                         <button onClick={handleSignIn} type="submit">Login</button>
+
+                        <Link to={'/resetpassword'} className={styles.resetPasswordLink}>Esqueceu sua senha?</Link>
                     </form>
                 </div>
             </main>

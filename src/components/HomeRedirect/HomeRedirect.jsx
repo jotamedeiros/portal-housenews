@@ -6,7 +6,7 @@ export default function HomeRedirect() {
         <main className={styles.mainHomeRedirect}>
             <div className={styles.mainText}>
                 <h1 className={styles.mainTitle}>Você já está logado.</h1>
-                <p className={styles.mainSubtitle}>Para voltar à página inicial, <Link to={'/'} className={styles.homeRedirectLink}>clique aqui.</Link>.</p>
+                <p className={styles.mainSubtitle}>Para voltar à página inicial, <Link to={'/'} className={styles.homeRedirectLink}>clique aqui.</Link></p>
                 <hr />
             </div>
         </main>

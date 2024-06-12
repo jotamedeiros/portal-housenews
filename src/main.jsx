@@ -11,6 +11,7 @@ import Registration from './routes/Registration/Registration.jsx';
 import NewPost from './routes/NewPost/NewPost.jsx';
 import UserLobby from './routes/UserLobby/UserLobby.jsx';
 import UserSetttings from './routes/UserSettings/UserSettings.jsx';
+import ResetPassword from './routes/ResetPassword/ResetPassword.jsx';
 
 
 // Configuração das rotas
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: '/usersettings',
         element: <UserSetttings />
+      },
+      {
+        path: '/resetpassword',
+        element: <ResetPassword />,
       },
     ]
   },
