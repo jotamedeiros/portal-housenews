@@ -1,7 +1,7 @@
 import styles from './UserMenu.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/Auth/AuthContext';
-import userImg from '../../assets/icons/user/user-blue-64.png';
+import userMenuImg from '../../assets/icons/user/user-menu-icon.png';
 import closeMenu from '../../assets/icons/actions/close-window-16.png'
 
 export default function UserMenu() {
@@ -29,9 +29,9 @@ export default function UserMenu() {
 
     return (
         <div className={styles.userMenu} >
-            <div className={styles.userImgContainer}>
+            <div className={styles.userMenuImgContainer}>
                 <Link to='/userlobby'>
-                    <img className={styles.userAvatar} src={userImg} alt="Avatar do Usuário" onMouseEnter={handleUserMenu} />
+                    <img className={styles.userMenuImg} src={userMenuImg} alt="Avatar do Usuário" onMouseEnter={handleUserMenu} onClick={handleCloseUserMenu} />
                 </Link>
 
                 <ul className={styles.userMenuDropdown} id='userMenuDropdown'>

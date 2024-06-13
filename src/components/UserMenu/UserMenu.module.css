@@ -5,14 +5,14 @@
     align-items: center;
 }
 
-.userImgContainer {
+.userMenuImgContainer {
     border-radius: 50%;
     position: relative;
 }
 
-.userAvatar {
-    width: 64px;
-    height: 64px;
+.userMenuImg {
+    width: 48px;
+    height: 48px;
 }
 
 .closeMenuButton {

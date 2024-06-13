@@ -23,7 +23,7 @@ export default function Lobby() {
 
                     <Link to={'/'} className={`${styles.lobbyOption} ${styles.optBuyCredits}`}>
                         <img src='' alt="Ícone Compra de Créditos" />
-                        <h3>Comprar Créditos</h3>
+                        <h3>Adquirir Créditos</h3>
                     </Link>
 
                     <Link to={'/newpost'} className={`${styles.lobbyOption} ${styles.optNewPost}`}>
