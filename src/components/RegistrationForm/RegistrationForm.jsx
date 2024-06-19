@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../../firebase/firebase';
 import { collection, addDoc } from "firebase/firestore";
-import {  createUserWithEmailAndPassword, sendEmailVerification  } from 'firebase/auth';
+import {  createUserWithEmailAndPassword, sendEmailVerification, updateProfile  } from 'firebase/auth';
 
 export default function RegistrationForm() {
     const navigate = useNavigate();
@@ -25,9 +25,12 @@ export default function RegistrationForm() {
                     name: name,
                     nickname: nickname,
                     email: email,
-                    password: password,
                     phone: phone,
                 })
+                updateProfile(user, {
+                    displayName: name,
+                    photoURL: null,
+                });
                 sendEmailVerification(user);
                 alert('Email de verificação de conta enviado!');
                 console.log(user);
