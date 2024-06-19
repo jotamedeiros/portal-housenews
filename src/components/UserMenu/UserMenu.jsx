@@ -57,6 +57,12 @@ export default function UserMenu() {
                     </li>
 
                     <li className={styles.userMenuItem}>
+                        <Link to='/userlobby' className={styles.userMenuLink} onClick={handleCloseUserMenu}>
+                            <p>Notícias Favoritas</p>
+                        </Link>
+                    </li>
+
+                    <li className={styles.userMenuItem}>
                         <p onClick={handleLogout} className={styles.userMenuLink}>Sair</p>
                     </li>
                 </ul>

@@ -69,3 +69,7 @@
 .optNewPost img {
     content: url('../../assets/icons/actions/add-post-128.png');
 }
+
+.optFavNews img {
+    content: url('../../assets/icons/actions/favnews-128.png');
+}

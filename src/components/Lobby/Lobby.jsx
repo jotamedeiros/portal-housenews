@@ -21,7 +21,7 @@ export default function Lobby() {
                         <h3>Configurações de Perfil</h3>
                     </Link>
 
-                    <Link to={'/'} className={`${styles.lobbyOption} ${styles.optBuyCredits}`}>
+                    <Link to={'/userlobby'} className={`${styles.lobbyOption} ${styles.optBuyCredits}`}>
                         <img src='' alt="Ícone Compra de Créditos" />
                         <h3>Adquirir Créditos</h3>
                     </Link>
@@ -29,6 +29,11 @@ export default function Lobby() {
                     <Link to={'/newpost'} className={`${styles.lobbyOption} ${styles.optNewPost}`}>
                         <img src='' alt="Ícone Nova Postagem" />
                         <h3>Nova Postagem</h3>
+                    </Link>
+
+                    <Link to={'/userlobby'} className={`${styles.lobbyOption} ${styles.optFavNews}`}>
+                        <img src='' alt="Ícone Notícias Favoritas" />
+                        <h3>Notícias Favoritas</h3>
                     </Link>
                 </div>
             </main>
