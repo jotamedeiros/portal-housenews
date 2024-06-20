@@ -12,6 +12,9 @@ export default function ResetPasswordForm() {
     const handleResetPassword = async (evt) => {
         evt.preventDefault();
         try {
+            // altera o idioma do firebase para o idioma do dispositivo do usuário.
+            auth.useDeviceLanguage();
+            // envia email de redefinição de senha para o usuário.
             await sendPasswordResetEmail(auth, email);
             setMessage('Email para redefinição de senha enviado!');
         } catch (error) {

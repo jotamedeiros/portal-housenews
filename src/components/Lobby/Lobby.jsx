@@ -1,12 +1,15 @@
 import styles from './Lobby.module.css';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/Auth/AuthContext';
 
 export default function Lobby() {
+    const { currentUser } = useAuth();
+
     return (
         <>
             <main className={styles.mainLobby}>
                 <div className={styles.mainText}>
-                    <h1 className={styles.mainTitle}>Olá, Usuário! Seja bem-vindo ao Portal House News.</h1>
+                    <h1 className={styles.mainTitle}>Olá, {currentUser.displayName}! Seja bem-vindo ao Portal House News.</h1>
                     <p className={styles.mainSubtitle}>Escolha abaixo qual ação você quer realizar.</p>
                     <hr />
                 </div>

@@ -17,9 +17,10 @@ export default function RegistrationForm() {
         e.preventDefault()
 
         await createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 // Signed in
                 const user = userCredential.user;
+                // cria o documento referente ao usuário dentro do banco de dados.
                 const docRef = addDoc(collection(db, "users"), {
                     uid: user.uid,
                     name: name,
@@ -27,15 +28,21 @@ export default function RegistrationForm() {
                     email: email,
                     phone: phone,
                 })
-                updateProfile(user, {
+                // salva o 'name' do usuário como 'displayName' da conta no firebase.
+                await updateProfile(user, {
                     displayName: name,
                     photoURL: null,
                 });
+                // altera o idioma do firebase para o idioma do dispositivo do usuário.
+                await auth.useDeviceLanguage();
+                // envia e-mail de verificação para o e-mail do usuário que criou a conta.
                 sendEmailVerification(user);
                 alert('Email de verificação de conta enviado!');
                 console.log(user);
                 console.log(docRef);
                 alert('Conta criada com sucesso!')
+
+                // redireciona o usuário para o lobby após criar a conta.
                 navigate("/userlobby")
                 // ...
             })
