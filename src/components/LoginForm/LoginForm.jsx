@@ -17,6 +17,7 @@ export default function LoginForm() {
             const user = userCredential.user;
             navigate("/userlobby");
             console.log(user);
+            console.log(user.uid)
             console.log('usuário logado com sucesso!')
         })
         .catch((error) => {

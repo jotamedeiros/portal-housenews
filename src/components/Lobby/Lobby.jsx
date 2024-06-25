@@ -1,15 +1,39 @@
 import styles from './Lobby.module.css';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/Auth/AuthContext';
+import { getDocumentWithCustomId } from '../RegistrationForm/RegistrationForm';
+import { useEffect, useState } from 'react';
 
 export default function Lobby() {
     const { currentUser } = useAuth();
+    const [ documentData, setDocumentData ]  = useState(null);
+    const [ nickname, setNickname ] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+          const data = await getDocumentWithCustomId('users', currentUser.uid);
+          if (data) {
+            setDocumentData(data);
+            setNickname(data.nickname);
+            console.log(data)
+            // If you want to access a specific string inside the data object, you can do so here
+          }
+        };
+        fetchData();
+    }, []);
+
+
+    // async function userData() {
+    //     await getDocumentWithCustomId('users', currentUser.uid).then((data) => {
+    //      console.log(data);
+    //     });
+    // }
 
     return (
         <>
             <main className={styles.mainLobby}>
                 <div className={styles.mainText}>
-                    <h1 className={styles.mainTitle}>Olá, {currentUser.displayName}! Seja bem-vindo ao Portal House News.</h1>
+                    <h1 className={styles.mainTitle}>Olá, {nickname}! Seja bem-vindo ao Portal House News.</h1>
                     <p className={styles.mainSubtitle}>Escolha abaixo qual ação você quer realizar.</p>
                     <hr />
                 </div>

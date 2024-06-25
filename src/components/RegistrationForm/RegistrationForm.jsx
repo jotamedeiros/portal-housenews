@@ -2,8 +2,32 @@ import styles from './RegistrationForm.module.css';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../../firebase/firebase';
-import { collection, addDoc } from "firebase/firestore";
-import {  createUserWithEmailAndPassword, sendEmailVerification, updateProfile  } from 'firebase/auth';
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import {  createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
+
+export async function getDocumentWithCustomId(collectionName, customId) {
+    try {
+        // Referência ao documento com o ID personalizado
+        const docRef = doc(db, collectionName, customId);
+
+        // Obtenha o documento
+        const docSnapshot = await getDoc(docRef);
+
+        if (docSnapshot.exists()) {
+            // Documento encontrado, acesse os dados
+            const data = docSnapshot.data();
+            console.log("Dados do documento:", data);
+            return data;
+        } else {
+            // Documento não encontrado
+            console.log("Documento não encontrado!");
+            return null;
+        }
+    } catch (error) {
+        console.error("Erro ao consultar documento: ", error);
+        return null;
+    }
+}
 
 export default function RegistrationForm() {
     const navigate = useNavigate();
@@ -13,38 +37,59 @@ export default function RegistrationForm() {
     const [nickname, setNickname] = useState('');
     const [phone, setPhone] = useState('');
 
+    const data = {
+        name: name,
+        nickname: nickname,
+        email: email,
+        phone: phone
+    };
+
+    // cria o documento referente ao usuário dentro do banco de dados.
+    async function createDocumentWithCustomId(collectionName, customId, data) {
+        try {
+            // Referência ao documento com o ID personalizado
+            const docRef = doc(db, collectionName, customId)
+
+            // Defina os dados no documento
+            await setDoc(docRef, data)
+
+            console.log(`Documento criado com o ID personalizado: ${customId}`);
+        } catch (error) {
+            console.error("Erro ao criar documento com ID personalizado: ", error);
+        }
+    }
+
+
+    // Função que cria o usuário
     const handleCreateUser = async (e) => {
         e.preventDefault()
 
+        // se necessário remover o 'async' após o then() e os 'await' em updateProfile() e useDeviceLang()
         await createUserWithEmailAndPassword(auth, email, password)
             .then(async (userCredential) => {
                 // Signed in
                 const user = userCredential.user;
-                // cria o documento referente ao usuário dentro do banco de dados.
-                const docRef = addDoc(collection(db, "users"), {
-                    uid: user.uid,
-                    name: name,
-                    nickname: nickname,
-                    email: email,
-                    phone: phone,
-                })
+
+                // chama a função de criação do documento referente ao usuário com ID customizado.
+                await createDocumentWithCustomId('users', user.uid, data);
+
                 // salva o 'name' do usuário como 'displayName' da conta no firebase.
                 await updateProfile(user, {
                     displayName: name,
                     photoURL: null,
                 });
+
                 // altera o idioma do firebase para o idioma do dispositivo do usuário.
                 await auth.useDeviceLanguage();
+
                 // envia e-mail de verificação para o e-mail do usuário que criou a conta.
                 sendEmailVerification(user);
                 alert('Email de verificação de conta enviado!');
                 console.log(user);
-                console.log(docRef);
                 alert('Conta criada com sucesso!')
 
                 // redireciona o usuário para o lobby após criar a conta.
                 navigate("/userlobby")
-                // ...
             })
             .catch((error) => {
                 const errorCode = error.code;
