@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }) => {
         return unsubscribe;
     }, []);
 
+    // função que executa o logout.
     const logout = () => {
         return auth.signOut();
     }

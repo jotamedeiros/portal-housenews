@@ -5,6 +5,7 @@ import { auth, db } from '../../firebase/firebase';
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import {  createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
 
+// função que obtem o documento referente ao UID do usuario.
 export async function getDocumentWithCustomId(collectionName, customId) {
     try {
         // Referência ao documento com o ID personalizado
@@ -64,7 +65,6 @@ export default function RegistrationForm() {
     const handleCreateUser = async (e) => {
         e.preventDefault()
 
-        // se necessário remover o 'async' após o then() e os 'await' em updateProfile() e useDeviceLang()
         await createUserWithEmailAndPassword(auth, email, password)
             .then(async (userCredential) => {
                 // Signed in
@@ -80,7 +80,7 @@ export default function RegistrationForm() {
                 });
 
                 // altera o idioma do firebase para o idioma do dispositivo do usuário.
-                await auth.useDeviceLanguage();
+                auth.useDeviceLanguage();
 
                 // envia e-mail de verificação para o e-mail do usuário que criou a conta.
                 sendEmailVerification(user);

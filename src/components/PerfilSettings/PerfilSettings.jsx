@@ -1,162 +1,80 @@
 import styles from './PerfilSettings.module.css';
 import edit from '../../assets/icons/actions/edit-red-24.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAuth } from '../../contexts/Auth/AuthContext';
+import { getDocumentWithCustomId } from '../RegistrationForm/RegistrationForm';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase/firebase';
 
-export default function PerfilSettings({ name, nickname, email, password, phone, xUrl, facebookUrl, instagramUrl, telegramUrl }) {
-    // Declaração dos States.
-    const [perfilName, setPerfilName] = useState(name);
-    const [perfilNickname, setPerfilNickname] = useState(nickname);
-    const [perfilEmail, setPerfilEmail] = useState(email);
-    const [perfilPassword, setPerfilPassword] = useState(password);
-    const [perfilPhone, setPerfilPhone] = useState(phone);
-    const [perfilTwitter, setPerfilTwitter] = useState(xUrl);
-    const [perfilFacebook, setPerfilFacebook] = useState(facebookUrl);
-    const [perfilInstagram, setPerfilInstagram] = useState(instagramUrl);
-    const [perfilTelegram, setPerfilTelegram] = useState(telegramUrl);
+export default function PerfilSettings() {
+    const { currentUser } = useAuth();
+    const user = currentUser;
 
-    // Função que salva alterações feitas no perfil do usuário.
-    function handleUpdateFields(evt) {
-        evt.preventDefault();
-        if (perfilName.length > 0 && perfilNickname.length > 0 && perfilEmail.length > 0 && perfilPassword.length >= 8) {
-            const perfilNameField = document.querySelector('#f_perfilName');
-            perfilNameField.setAttribute('disabled', 'disabled');
-            const perfilNicknameField = document.querySelector('#f_perfilNickname');
-            perfilNicknameField.setAttribute('disabled', 'disabled');
-            const perfilEmailField = document.querySelector('#f_perfilEmail');
-            perfilEmailField.setAttribute('disabled', 'disabled');
-            const perfilPasswordField = document.querySelector('#f_perfilPassword');
-            perfilPasswordField.setAttribute('disabled', 'disabled');
-            const perfilPhoneField = document.querySelector('#f_perfilPhone');
-            perfilPhoneField.setAttribute('disabled', 'disabled');
-            const perfilTwitterField = document.querySelector('#f_perfilTwitter');
-            perfilTwitterField.setAttribute('disabled', 'disabled');
-            const perfilFacebookField = document.querySelector('#f_perfilFacebook');
-            perfilFacebookField.setAttribute('disabled', 'disabled');
-            const perfilInstagramField = document.querySelector('#f_perfilInstagram');
-            perfilInstagramField.setAttribute('disabled', 'disabled');
-            const perfilTelegramField = document.querySelector('#f_perfilTelegram');
-            perfilTelegramField.setAttribute('disabled', 'disabled');
-            alert('As alterações foram salvas com sucesso!')
-        } else {
-            alert('Você precisa preencher todos os campos corretamente!')
+    // declaração de states
+    const [ documentData, setDocumentData ]  = useState(null);
+    const [ name, setName ] = useState('')
+    const [ nickname, setNickname ] = useState('');
+    const [ email, setEmail ] = useState('');
+    const [ phone, setPhone ] = useState('');
+
+
+    // função que obtem o valor das infos do usuário através dos dados do 'userdoc'.
+    useEffect(() => {
+        const fetchData = async () => {
+          const data = await getDocumentWithCustomId('users', currentUser.uid);
+          if (data) {
+            setDocumentData(data);
+            setName(data.name);
+            setNickname(data.nickname);
+            setEmail(data.email);
+            setPhone(data.phone);
+            console.log('data:', data)
+            // If you want to access a specific string inside the data object, you can do so here
+          }
+        };
+        fetchData();
+    }, []);
+
+    // função que habilita os campos para alteração dos valores.
+    const handleUnlockField = (id) => {
+        const field = document.querySelector(`#${id}`);
+        field.removeAttribute('disabled');
+    };
+
+    // função que altera o valor do 'displayName'
+    // const handleUpdateProfile = (id, name) => {
+    //     updateProfile(user, {
+            // displayName: name,
+            // photoURL: null,
+    //     })
+    //     const field = document.querySelector(`#${id}`);
+    //     field.setAttribute('disabled', 'disabled');
+    // };
+
+    // função que salva as alterações no userdoc do firebase.
+    const updateDocument = async () => {
+        const docRef = doc(db, 'users', currentUser.uid);
+        try {
+            await updateDoc(docRef, {
+                name: name,
+                nickname: nickname,
+                email: email,
+                phone: phone
+            });
+            console.log('Documento atualizado com sucesso!')
+            alert('Documento atualizado com sucesso!')
+            location.reload();
+        } catch (error) {
+            console.error('Falha na atualização do documento:', error)
+            alert('Erro: ')
         }
     }
 
 
-    // Funções de manipulação do campo 'Nome'.
-    function handleEnableNameField() {
-        const perfilNameField = document.querySelector('#f_perfilName');
-        perfilNameField.removeAttribute('disabled');
-        setPerfilName('');
-        perfilNameField.focus();
-    }
-
-    function handleChangeName(evt) {
-        setPerfilName(evt.target.value);
-    }
-
-
-    // Funções de manipulação do campo 'Nickname'.
-    function handleEnableNicknameField() {
-        const perfilNicknameField = document.querySelector('#f_perfilNickname');
-        perfilNicknameField.removeAttribute('disabled');
-        setPerfilNickname('');
-        perfilNicknameField.focus();
-    }
-
-    function handleChangeNickname(evt) {
-        setPerfilNickname(evt.target.value);
-    }
-
-
-    // Funções de manipulação do campo 'Email'.
-    function handleEnableEmailField() {
-        const perfilEmailField = document.querySelector('#f_perfilEmail');
-        perfilEmailField.removeAttribute('disabled');
-        setPerfilEmail('');
-        perfilEmailField.focus();
-    }
-
-    function handleChangeEmail(evt) {
-        setPerfilEmail(evt.target.value);
-    }
-
-
-    // Funções de manipulação do campo 'Password'.
-    function handleEnablePasswordField() {
-        const perfilPasswordField = document.querySelector('#f_perfilPassword');
-        perfilPasswordField.removeAttribute('disabled');
-        setPerfilPassword('');
-        perfilPasswordField.focus();
-    }
-
-    function handleChangePassword(evt) {
-        setPerfilPassword(evt.target.value);
-    }
-
-
-    // Funções de manipulação do campo 'Phone'.
-    function handleEnablePhoneField() {
-        const perfilPhoneField = document.querySelector('#f_perfilPhone');
-        perfilPhoneField.removeAttribute('disabled');
-        setPerfilPhone('');
-        perfilPhoneField.focus();
-    }
-
-    function handleChangePhone(evt) {
-        setPerfilPhone(evt.target.value);
-    }
-
-
-    // Funções de manipulação do campo 'Twitter'.
-    function handleEnableTwitterField() {
-        const perfilTwitterField = document.querySelector('#f_perfilTwitter');
-        perfilTwitterField.removeAttribute('disabled');
-        setPerfilTwitter('');
-        perfilTwitterField.focus();
-    }
-
-    function handleChangeTwitter(evt) {
-        setPerfilTwitter(evt.target.value);
-    }
-
-
-    // Funções de manipulação do campo 'Facebook'.
-    function handleEnableFacebookField() {
-        const perfilFacebookField = document.querySelector('#f_perfilFacebook');
-        perfilFacebookField.removeAttribute('disabled');
-        setPerfilFacebook('');
-        perfilFacebookField.focus();
-    }
-
-    function handleChangeFacebook(evt) {
-        setPerfilFacebook(evt.target.value);
-    }
-
-
-    // Funções de manipulação do campo 'Instagram'.
-    function handleEnableInstagramField() {
-        const perfilInstagramField = document.querySelector('#f_perfilInstagram');
-        perfilInstagramField.removeAttribute('disabled');
-        setPerfilInstagram('');
-        perfilInstagramField.focus();
-    }
-
-    function handleChangeInstagram(evt) {
-        setPerfilInstagram(evt.target.value);
-    }
-
-
-    // Funções de manipulação do campo 'Telegram'.
-    function handleEnableTelegramField() {
-        const perfilTelegramField = document.querySelector('#f_perfilTelegram');
-        perfilTelegramField.removeAttribute('disabled');
-        setPerfilTelegram('');
-        perfilTelegramField.focus();
-    }
-
-    function handleChangeTelegram(evt) {
-        setPerfilTelegram(evt.target.value);
+    // função do botão que salva as alterações.
+    const handleSaveChanges = (evt) => {
+        evt.preventDefault();
+        updateDocument();
     }
 
     return (
@@ -173,67 +91,67 @@ export default function PerfilSettings({ name, nickname, email, password, phone,
                             <div className={styles.perfilField}>
                                 <label htmlFor="f_perfilName">Nome Completo</label>
                                 <div className={styles.perfilFieldInfos}>
-                                    <input type="text" name="f_perfilName" id="f_perfilName" value={perfilName} onChange={handleChangeName} disabled />
-                                    <img src={edit} alt="ícone Editar Informação" onClick={handleEnableNameField} />
+                                    <input type="text" name="f_perfilName" id="f_perfilName" value={name} onChange={(evt) => setName(evt.target.value)} disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick={() => handleUnlockField('f_perfilName')} />
                                 </div>
                             </div>
                             <div className={styles.perfilField}>
                                 <label htmlFor="f_perfilNickname">Nome de Exibição</label>
                                 <div className={styles.perfilFieldInfos}>
-                                    <input type="text" name="f_perfilNickname" id="f_perfilNickname" value={perfilNickname} onChange={handleChangeNickname} disabled />
-                                    <img src={edit} alt="ícone Editar Informação" onClick={handleEnableNicknameField} />
+                                    <input type="text" name="f_perfilNickname" id="f_perfilNickname" value={nickname} onChange={(evt) => setNickname(evt.target.value)} disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick={() => handleUnlockField('f_perfilNickname')} />
                                 </div>
                             </div>
                             <div className={styles.perfilField}>
                                 <label htmlFor="f_perfilEmail">Email</label>
                                 <div className={styles.perfilFieldInfos}>
-                                    <input type="email" name="f_perfilEmail" id="f_perfilEmail" value={perfilEmail} onChange={handleChangeEmail} disabled />
-                                    <img src={edit} alt="ícone Editar Informação" onClick={handleEnableEmailField} />
+                                    <input type="email" name="f_perfilEmail" id="f_perfilEmail" value={email} onChange={(evt) => setEmail(evt.target.value)} disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick={() => handleUnlockField('f_perfilEmail')} />
                                 </div>
                             </div>
-                            <div className={styles.perfilField}>
+                            {/* <div className={styles.perfilField}>
                                 <label htmlFor="f_perfilPassword">Senha</label>
                                 <div className={styles.perfilFieldInfos}>
-                                    <input type="password" name="f_perfilPassword" id="f_perfilPassword" value={perfilPassword} onChange={handleChangePassword} disabled />
-                                    <img src={edit} alt="ícone Editar Informação" onClick={handleEnablePasswordField} />
+                                    <input type="password" name="f_perfilPassword" id="f_perfilPassword" value='********' onChange='' disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick={() => handleUnlockField('f_perfilPassword')} />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className={styles.perfilField}>
                                 <label htmlFor="f_perfilPhone">Celular</label>
                                 <div className={styles.perfilFieldInfos}>
-                                    <input type="tel" name="f_perfilPhone" id="f_perfilPhone" value={perfilPhone} onChange={handleChangePhone} pattern='/^(?:\+)[0-9]{2}\s?(?:\()[0-9]{2}(?:\))\s?[0-9]{4,5}(?:-)[0-9]{4}$/' maxLength='17' disabled />
-                                    <img src={edit} alt="ícone Editar Informação" onClick={handleEnablePhoneField} />
+                                    <input type="tel" name="f_perfilPhone" id="f_perfilPhone" value={phone} onChange={(evt) => setPhone(evt.target.value)} pattern='/^(?:\+)[0-9]{2}\s?(?:\()[0-9]{2}(?:\))\s?[0-9]{4,5}(?:-)[0-9]{4}$/' maxLength='17' disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick={() => handleUnlockField('f_perfilPhone')} />
                                 </div>
                             </div>
                             <div className={styles.perfilField}>
                                 <label htmlFor="f_perfilTwitter">Twitter</label>
                                 <div className={styles.perfilFieldInfos}>
-                                    <input type="text" name="f_perfilTwitter" id="f_perfilTwitter" value={perfilTwitter} onChange={handleChangeTwitter} disabled />
-                                    <img src={edit} alt="ícone Editar Informação" onClick={handleEnableTwitterField} />
+                                    <input type="text" name="f_perfilTwitter" id="f_perfilTwitter" value='' onChange='' disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick='' />
                                 </div>
                             </div>
                             <div className={styles.perfilField}>
                                 <label htmlFor="f_perfilFacebook">Facebook</label>
                                 <div className={styles.perfilFieldInfos}>
-                                    <input type="text" name="f_perfilFacebook" id="f_perfilFacebook" value={perfilFacebook} onChange={handleChangeFacebook} disabled />
-                                    <img src={edit} alt="ícone Editar Informação" onClick={handleEnableFacebookField} />
+                                    <input type="text" name="f_perfilFacebook" id="f_perfilFacebook" value='' onChange='' disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick='' />
                                 </div>
                             </div>
                             <div className={styles.perfilField}>
                                 <label htmlFor="f_perfilInstagram">Instagram</label>
                                 <div className={styles.perfilFieldInfos}>
-                                    <input type="text" name="f_perfilInstagram" id="f_perfilInstagram" value={perfilInstagram} onChange={handleChangeInstagram} disabled />
-                                    <img src={edit} alt="ícone Editar Informação" onClick={handleEnableInstagramField} />
+                                    <input type="text" name="f_perfilInstagram" id="f_perfilInstagram" value='' onChange='' disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick='' />
                                 </div>
                             </div>
                             <div className={styles.perfilField}>
                                 <label htmlFor="f_perfilTelegram">Telegram</label>
                                 <div className={styles.perfilFieldInfos}>
-                                    <input type="text" name="f_perfilTelegram" id="f_perfilTelegram" value={perfilTelegram} onChange={handleChangeTelegram} disabled />
-                                    <img src={edit} alt="ícone Editar Informação" onClick={handleEnableTelegramField} />
+                                    <input type="text" name="f_perfilTelegram" id="f_perfilTelegram" value='' onChange='' disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick='' />
                                 </div>
                             </div>
-                            <button className={styles.sendChangesButton} type="submit" onClick={handleUpdateFields}>Salvar alterações</button>
+                            <button className={styles.sendChangesButton} type="submit" onClick={handleSaveChanges}>Salvar alterações</button>
                         </div>
                     </div>
                 </form>

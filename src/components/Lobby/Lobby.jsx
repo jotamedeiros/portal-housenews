@@ -9,6 +9,7 @@ export default function Lobby() {
     const [ documentData, setDocumentData ]  = useState(null);
     const [ nickname, setNickname ] = useState('');
 
+    // função que obtem o valor do nickname do usuário através dos dados do 'userdoc'.
     useEffect(() => {
         const fetchData = async () => {
           const data = await getDocumentWithCustomId('users', currentUser.uid);
