@@ -1,4 +1,4 @@
-.mainNeedLogin {
+.mainNeedEmailVerification {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -19,12 +19,12 @@
     font-weight: 600;
 }
 
-.needLoginLink {
+.emailVerifyLink {
     color: var(--primary-color);
     text-decoration: none;
 }
 
-.needLoginLink:hover {
+.emailVerifyLink:hover {
     color: var(--primary-color-hover);
     text-decoration: underline;
     cursor: pointer;

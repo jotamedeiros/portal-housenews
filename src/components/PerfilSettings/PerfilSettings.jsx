@@ -1,10 +1,12 @@
 import styles from './PerfilSettings.module.css';
 import edit from '../../assets/icons/actions/edit-red-24.png';
+import ArrowBack from '../ArrowBack/ArrowBack';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/Auth/AuthContext';
 import { getDocumentWithCustomId } from '../RegistrationForm/RegistrationForm';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase/firebase';
+
 
 export default function PerfilSettings() {
     const { currentUser } = useAuth();
@@ -41,16 +43,6 @@ export default function PerfilSettings() {
         field.removeAttribute('disabled');
     };
 
-    // função que altera o valor do 'displayName'
-    // const handleUpdateProfile = (id, name) => {
-    //     updateProfile(user, {
-            // displayName: name,
-            // photoURL: null,
-    //     })
-    //     const field = document.querySelector(`#${id}`);
-    //     field.setAttribute('disabled', 'disabled');
-    // };
-
     // função que salva as alterações no userdoc do firebase.
     const updateDocument = async () => {
         const docRef = doc(db, 'users', currentUser.uid);
@@ -81,7 +73,10 @@ export default function PerfilSettings() {
         <>
             <main className={styles.mainPerfilSettings}>
                 <div className={styles.mainText}>
-                    <h1 className={styles.mainTitle}>Configurações de Perfil</h1>
+                    <div className={styles.mainTitleContainer}>
+                        <ArrowBack url={'/userlobby'} />
+                        <h1 className={styles.mainTitle}>Configurações de Perfil</h1>
+                    </div>
                     <p className={styles.mainSubtitle}>Gerencie e atualize suas informações de perfil.</p>
                     <hr />
                 </div>

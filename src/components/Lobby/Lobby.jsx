@@ -23,13 +23,6 @@ export default function Lobby() {
         fetchData();
     }, []);
 
-
-    // async function userData() {
-    //     await getDocumentWithCustomId('users', currentUser.uid).then((data) => {
-    //      console.log(data);
-    //     });
-    // }
-
     return (
         <>
             <main className={styles.mainLobby}>

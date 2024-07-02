@@ -1,11 +1,15 @@
 import styles from './NewPostForm.module.css'
+import ArrowBack from '../ArrowBack/ArrowBack';
 
 export default function NewPostForm() {
     return (
         <>
                 <main className={styles.mainNewPost}>
                     <div className={styles.mainText}>
-                        <h1 className={styles.mainTitle}>Nova Postagem</h1>
+                        <div className={styles.mainTitleContainer}>
+                            <ArrowBack url={'/userlobby'} />
+                            <h1 className={styles.mainTitle}>Nova Postagem</h1>
+                        </div>
                         <p className={styles.mainSubtitle}>Crie um novo post e compartilhe suas informações publicando a notícia rapidamente aqui no House News.</p>
                         <hr />
                     </div>

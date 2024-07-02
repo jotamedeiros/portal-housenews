@@ -1,6 +1,6 @@
 import PerfilSettings from "../../components/PerfilSettings/PerfilSettings";
 import { useAuth } from "../../contexts/Auth/AuthContext";
-import NeedLogin from "../../components/NeedLogin/NeedLogin";
+import NeedEmailVerification from "../../components/NeedEmailVerification/NeedEmailVerification";
 
 export default function UserSetttings() {
     const { currentUser } = useAuth();
@@ -8,10 +8,10 @@ export default function UserSetttings() {
     return (
         <>
             {
-                currentUser ? (
+                currentUser && currentUser.emailVerified ? (
                     <PerfilSettings />
                 ) : (
-                    <NeedLogin />
+                    <NeedEmailVerification />
                 )
             }
         </>

@@ -1,6 +1,7 @@
 import NewPostForm from "../../components/NewPostForm/NewPostForm";
 import { useAuth } from "../../contexts/Auth/AuthContext";
 import NeedLogin from "../../components/NeedLogin/NeedLogin";
+import NeedEmailVerification from "../../components/NeedEmailVerification/NeedEmailVerification";
 
 export default function NewPost() {
     const { currentUser } = useAuth();
@@ -8,10 +9,10 @@ export default function NewPost() {
     return (
         <>
             {
-                currentUser ? (
+                currentUser && currentUser.emailVerified ? (
                     <NewPostForm />
                 ) : (
-                    <NeedLogin />
+                    <NeedEmailVerification />
                 )
             }
         </>
