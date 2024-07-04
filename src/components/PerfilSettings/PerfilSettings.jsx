@@ -19,6 +19,10 @@ export default function PerfilSettings() {
     const [ nickname, setNickname ] = useState('');
     const [ email, setEmail ] = useState('');
     const [ phone, setPhone ] = useState('');
+    const [ urlX, setUrlX ] = useState('');
+    const [ urlFacebook, setUrlFacebook ] = useState('');
+    const [ urlInstagram, setUrlInstagram ] = useState('');
+    const [ urlTelegram, setUrlTelegram ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ currentPassword, setCurrentPassword ] = useState('');
     const [ error, setError ] = useState('');
@@ -35,6 +39,10 @@ export default function PerfilSettings() {
             setNickname(data.nickname);
             setEmail(data.email);
             setPhone(data.phone);
+            setUrlX(data.urlX);
+            setUrlFacebook(data.urlFacebook);
+            setUrlInstagram(data.urlInstagram);
+            setUrlTelegram(data.urlTelegram);
             console.log('data:', data)
             // If you want to access a specific string inside the data object, you can do so here
           }
@@ -46,6 +54,7 @@ export default function PerfilSettings() {
     const handleUnlockField = (id) => {
         const field = document.querySelector(`#${id}`);
         field.removeAttribute('disabled');
+        field.focus();
     };
 
     // função que salva as alterações no userdoc do firebase.
@@ -56,14 +65,18 @@ export default function PerfilSettings() {
                 name: name,
                 nickname: nickname,
                 email: email,
-                phone: phone
+                phone: phone,
+                urlX: urlX,
+                urlFacebook: urlFacebook,
+                urlInstagram: urlInstagram,
+                urlTelegram: urlTelegram
             });
             console.log('Documento atualizado com sucesso!')
-            alert('Documento atualizado com sucesso!')
+            alert('Perfil atualizado com sucesso!')
             location.reload();
         } catch (error) {
             console.error('Falha na atualização do documento:', error)
-            alert('Erro: ')
+            alert(`Erro: ${error}`)
         }
     };
 
@@ -161,34 +174,34 @@ export default function PerfilSettings() {
                             </div>
 
                             <div className={styles.perfilField}>
-                                <label htmlFor="f_perfilTwitter">Twitter</label>
+                                <label htmlFor="f_perfilX">Twitter</label>
                                 <div className={styles.perfilFieldInfos}>
-                                    <input type="text" name="f_perfilTwitter" id="f_perfilTwitter" value='' onChange='' disabled />
-                                    <img src={edit} alt="ícone Editar Informação" onClick='' />
+                                    <input type="text" name="f_perfilX" id="f_perfilX" value={urlX} onChange={(evt) => setUrlX(evt.target.value)} disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick={() => handleUnlockField('f_perfilX')} />
                                 </div>
                             </div>
 
                             <div className={styles.perfilField}>
                                 <label htmlFor="f_perfilFacebook">Facebook</label>
                                 <div className={styles.perfilFieldInfos}>
-                                    <input type="text" name="f_perfilFacebook" id="f_perfilFacebook" value='' onChange='' disabled />
-                                    <img src={edit} alt="ícone Editar Informação" onClick='' />
+                                    <input type="text" name="f_perfilFacebook" id="f_perfilFacebook" value={urlFacebook} onChange={(evt) => setUrlFacebook(evt.target.value)} disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick={() => handleUnlockField('f_perfilFacebook')} />
                                 </div>
                             </div>
 
                             <div className={styles.perfilField}>
                                 <label htmlFor="f_perfilInstagram">Instagram</label>
                                 <div className={styles.perfilFieldInfos}>
-                                    <input type="text" name="f_perfilInstagram" id="f_perfilInstagram" value='' onChange='' disabled />
-                                    <img src={edit} alt="ícone Editar Informação" onClick='' />
+                                    <input type="text" name="f_perfilInstagram" id="f_perfilInstagram" value={urlInstagram} onChange={(evt) => setUrlInstagram(evt.target.value)} disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick={() => handleUnlockField('f_perfilInstagram')} />
                                 </div>
                             </div>
 
                             <div className={styles.perfilField}>
                                 <label htmlFor="f_perfilTelegram">Telegram</label>
                                 <div className={styles.perfilFieldInfos}>
-                                    <input type="text" name="f_perfilTelegram" id="f_perfilTelegram" value='' onChange='' disabled />
-                                    <img src={edit} alt="ícone Editar Informação" onClick='' />
+                                    <input type="text" name="f_perfilTelegram" id="f_perfilTelegram" value={urlTelegram} onChange={(evt) => setUrlTelegram(evt.target.value)} disabled />
+                                    <img src={edit} alt="ícone Editar Informação" onClick={() => handleUnlockField('f_perfilTelegram')} />
                                 </div>
                             </div>
 

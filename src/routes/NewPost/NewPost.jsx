@@ -12,7 +12,21 @@ export default function NewPost() {
                 currentUser && currentUser.emailVerified ? (
                     <NewPostForm />
                 ) : (
+                    null
+                )
+            }
+            {
+                currentUser && !currentUser.emailVerified ? (
                     <NeedEmailVerification />
+                ) : (
+                    null
+                )
+            }
+            {
+                currentUser ? (
+                    null
+                ) : (
+                    <NeedLogin />
                 )
             }
         </>
