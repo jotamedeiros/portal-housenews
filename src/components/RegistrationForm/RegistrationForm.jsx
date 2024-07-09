@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../../firebase/firebase';
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import {  createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
+import ArrowBack from '../ArrowBack/ArrowBack';
 
 // função que obtem o documento referente ao UID do usuario.
 export async function getDocumentWithCustomId(collectionName, customId) {
@@ -108,9 +109,12 @@ export default function RegistrationForm() {
         <>
             <main className={styles.mainRegistrationForm}>
                 <div className={styles.mainText}>
-                    <h1 className={styles.mainTitle}>Crie sua conta</h1>
+                    <div className={styles.mainTitleContainer}>
+                        <ArrowBack url={'/login'} />
+                        <h1 className={styles.mainTitle}>Crie sua conta</h1>
+                    </div>
                     <p className={styles.mainSubtitle}>Criando sua conta você poderá publicar e compartilhar as notícias postadas aqui no House News.</p>
-                    <p className={styles.mainLoginLink}>Já tem uma conta? <Link to='/login'>Acesse aqui</Link></p>
+                    <p className={styles.mainLoginLink}>Já tem uma conta? <Link to='/login'>Clique aqui.</Link></p>
                     <hr />
                 </div>
                 <div className={styles.registrationContainer}>

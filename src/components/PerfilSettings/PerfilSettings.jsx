@@ -2,14 +2,16 @@ import styles from './PerfilSettings.module.css';
 import edit from '../../assets/icons/actions/edit-red-24.png';
 import ArrowBack from '../ArrowBack/ArrowBack';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/Auth/AuthContext';
 import { getDocumentWithCustomId } from '../RegistrationForm/RegistrationForm';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase/firebase';
 import Modal from '../Modal/Modal';
-import { EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
+import { EmailAuthProvider, reauthenticateWithCredential, updatePassword, deleteUser } from 'firebase/auth';
 
 export default function PerfilSettings() {
+    const navigate = useNavigate();
     const { currentUser } = useAuth();
     const user = currentUser;
 
@@ -22,12 +24,13 @@ export default function PerfilSettings() {
     const [ urlX, setUrlX ] = useState('');
     const [ urlFacebook, setUrlFacebook ] = useState('');
     const [ urlInstagram, setUrlInstagram ] = useState('');
-    const [ urlTelegram, setUrlTelegram ] = useState('');
+    // const [ urlTelegram, setUrlTelegram ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ currentPassword, setCurrentPassword ] = useState('');
     const [ error, setError ] = useState('');
     const [ message, setMessage ] = useState('');
-    const [ openModal, setOpenModal ] = useState(false);
+    const [ openModalPassword, setOpenModalPassword ] = useState(false);
+    const [ openModalDelete, setOpenModalDelete ] = useState(false);
 
     // função que obtem o valor das infos do usuário através dos dados do 'userdoc'.
     useEffect(() => {
@@ -42,7 +45,7 @@ export default function PerfilSettings() {
             setUrlX(data.urlX);
             setUrlFacebook(data.urlFacebook);
             setUrlInstagram(data.urlInstagram);
-            setUrlTelegram(data.urlTelegram);
+            // setUrlTelegram(data.urlTelegram);
             console.log('data:', data)
             // If you want to access a specific string inside the data object, you can do so here
           }
@@ -69,7 +72,7 @@ export default function PerfilSettings() {
                 urlX: urlX,
                 urlFacebook: urlFacebook,
                 urlInstagram: urlInstagram,
-                urlTelegram: urlTelegram
+                // urlTelegram: urlTelegram
             });
             console.log('Documento atualizado com sucesso!')
             alert('Perfil atualizado com sucesso!')
@@ -90,7 +93,12 @@ export default function PerfilSettings() {
     // função do botão 'alterar senha' que abre o modal.
     const handleOpenModal = (evt) => {
         evt.preventDefault();
-        setOpenModal(true);
+        console.log(evt);
+        if (evt.target.firstChild.data == 'Alterar senha') {
+            setOpenModalPassword(true);
+        } else if (evt.target.firstChild.data == 'Deletar conta') {
+            setOpenModalDelete(true);
+        }
     };
 
     // função do botão 'arrow back' que fecha o modal.
@@ -98,7 +106,10 @@ export default function PerfilSettings() {
         evt.preventDefault();
         setMessage('');
         setError('');
-        setOpenModal(false);
+        if (evt.target.alt == 'Retornar') {
+            setOpenModalPassword(false);
+            setOpenModalDelete(false);
+        }
     };
 
     // função que reautentica o usuário e depois altera sua senha baseada no novo valor.
@@ -124,6 +135,34 @@ export default function PerfilSettings() {
             })
         } catch (error) {
             setError(`Falha ao alterar senha: ${error.message}`);
+        }
+    };
+
+    // função que reautentica o usuário e depois deleta sua conta.
+    const handleReauthenticateAndDeleteAccount = async (evt) => {
+        evt.preventDefault();
+        setError('');
+        setMessage('');
+
+        // confere se o usuário está ou não logado para realizar a ação.
+        if (!user) {
+            setError('Você precisa estar logado para deletar sua conta.')
+            return;
+        }
+
+        // obtém as credenciais do usuário
+        const credential = EmailAuthProvider.credential(user.email, currentPassword);
+
+        // executa a reautenticação passando o valor do usuário e de suas credenciais e depois altera a senha.
+        try {
+            await reauthenticateWithCredential(user, credential);
+            await deleteUser(user).then(() => {
+                setMessage('Conta deletada com sucesso.');
+                alert('Conta deletada com sucesso.')
+                navigate('/');
+            })
+        } catch (error) {
+            setError(`Falha ao deletar conta: ${error.message}`);
         }
     };
 
@@ -197,21 +236,22 @@ export default function PerfilSettings() {
                                 </div>
                             </div>
 
-                            <div className={styles.perfilField}>
+                            {/* <div className={styles.perfilField}>
                                 <label htmlFor="f_perfilTelegram">Telegram</label>
                                 <div className={styles.perfilFieldInfos}>
                                     <input type="text" name="f_perfilTelegram" id="f_perfilTelegram" value={urlTelegram} onChange={(evt) => setUrlTelegram(evt.target.value)} disabled />
                                     <img src={edit} alt="ícone Editar Informação" onClick={() => handleUnlockField('f_perfilTelegram')} />
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className={styles.perfilSettingsButtonsContainer}>
                                 <button className={styles.sendChangesButton} type="submit" onClick={handleSaveChanges}>Salvar alterações</button>
                                 <button className={styles.updatePasswordButton} onClick={handleOpenModal} >Alterar senha</button>
+                                <button className={styles.deleteAccountButton} onClick={handleOpenModal}>Deletar conta</button>
                             </div>
 
                             {/* Modal de alteração de senha */}
-                            <Modal isOpen={openModal}>
+                            <Modal isOpen={openModalPassword}>
                                 {/* children */}
                                 <div className={styles.modalContainer}>
                                     <div className={styles.modalTitleContainer}>
@@ -239,6 +279,36 @@ export default function PerfilSettings() {
                                         {error && <p style={{ color: 'var(--primary-color)', fontWeight: '600' }}>{error}</p>}
                                         {message && <p style={{ color: 'var(--black-color)' }}>{message}</p>}
                                     </form>
+                                </div>
+                            </Modal>
+
+                            {/* Modal de destruição de conta */}
+                            <Modal isOpen={openModalDelete}>
+                                {/* children */}
+                                <div className={styles.modalContainer}>
+                                    <div className={styles.modalTitleContainer}>
+                                        <div onClick={handleCloseModal}>
+                                            <ArrowBack />
+                                        </div>
+                                        <h1 className={styles.modalTitle}>Deletar conta</h1>
+                                    </div>
+
+                                    <p>Para deletar sua conta, você precisa confirmar sua senha.</p>
+                                    <hr />
+
+                                    <form >
+                                        <div className={styles.modalFieldInfos}>
+                                            <label htmlFor="f_currentPassword">Senha:</label>
+                                            <input type="password" name="f_currentPassword" id="f_currentPassword" value={currentPassword} onChange={(evt) => setCurrentPassword(evt.target.value)} />
+                                        </div>
+                                    </form>
+
+                                    <p className={styles.modalSubtitle}><span className={styles.attentionSpan}>ATENÇÃO:</span> Clicando no botão, você irá deletar permanentemente sua conta.</p>
+
+                                    <button onClick={handleReauthenticateAndDeleteAccount}>Sim, quero deletar minha conta.</button>
+
+                                    {error && <p style={{ color: 'var(--primary-color)', fontWeight: '600' }}>{error}</p>}
+                                    {message && <p style={{ color: 'var(--black-color)' }}>{message}</p>}
                                 </div>
                             </Modal>
 

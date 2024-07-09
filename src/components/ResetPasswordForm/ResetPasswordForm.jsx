@@ -2,12 +2,14 @@ import styles from './ResetPasswordForm.module.css';
 import { useState } from 'react';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../../firebase/firebase';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import ArrowBack from '../ArrowBack/ArrowBack';
 
 export default function ResetPasswordForm() {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleResetPassword = async (evt) => {
         evt.preventDefault();
@@ -26,8 +28,11 @@ export default function ResetPasswordForm() {
         <>
             <main className={styles.mainResetPassword}>
                 <div className={styles.mainText}>
-                    <h1 className={styles.mainTitle}>Esqueci minha senha</h1>
-                    <p className={styles.mainSubtitle}>Você pode recuperá-la informando o endereço de e-mail de sua conta e recebendo um link de redefinição.</p>
+                    <div className={styles.mainTitleContainer}>
+                        <ArrowBack url={'/login'} />
+                        <h1 className={styles.mainTitle}>Esqueci minha senha</h1>
+                    </div>
+                    <p className={styles.mainSubtitle}>Você pode recuperá-la informando o endereço de email de sua conta e recebendo um link de redefinição.</p>
                     <hr />
                 </div>
                 <div className={styles.resetPasswordContainer}>

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase/firebase';
 import styles from './LoginForm.module.css'
+import ArrowBack from '../ArrowBack/ArrowBack';
 
 export default function LoginForm() {
     const navigate = useNavigate();
@@ -36,7 +37,10 @@ export default function LoginForm() {
         <>
             <main>
                 <div className={styles.mainText}>
-                    <h1 className={styles.mainTitle}>Entre em sua conta</h1>
+                    <div className={styles.mainTitleContainer}>
+                        <ArrowBack url={'/'} />
+                        <h1 className={styles.mainTitle}>Entre em sua conta</h1>
+                    </div>
                     <p className={styles.mainSubtitle}>Faça login para postar e compartilhar novas notícias, adquirir pacotes ou gerenciar suas informações de perfil.</p>
                     <p className={styles.mainRegistrationLink}>Ainda não possui uma conta? <Link to='/registration'>Crie sua conta</Link></p>
                     <hr />
