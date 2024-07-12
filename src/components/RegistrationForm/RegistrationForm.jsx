@@ -38,12 +38,18 @@ export default function RegistrationForm() {
     const [name, setName] = useState('');
     const [nickname, setNickname] = useState('');
     const [phone, setPhone] = useState('');
+    const [urlX, setUrlX] = useState('');
+    const [urlFacebook, setUrlFacebook] = useState('');
+    const [urlInstagram, setUrlInstagram] = useState('');
 
     const data = {
         name: name,
         nickname: nickname,
         email: email,
-        phone: phone
+        phone: phone,
+        urlX: urlX,
+        urlFacebook: urlFacebook,
+        urlInstagram: urlInstagram
     };
 
     // cria o documento referente ao usuário dentro do banco de dados.
