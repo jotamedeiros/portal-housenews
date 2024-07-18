@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/Auth/AuthContext';
 import { getDocumentWithCustomId } from '../RegistrationForm/RegistrationForm';
 import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../../firebase/firebase';
+import { auth, db } from '../../firebase/firebase';
 import Modal from '../Modal/Modal';
-import { EmailAuthProvider, reauthenticateWithCredential, updatePassword, deleteUser } from 'firebase/auth';
+import { EmailAuthProvider, reauthenticateWithCredential, updatePassword, updateEmail, deleteUser, sendEmailVerification, useDeviceLanguage } from 'firebase/auth';
 
 export default function PerfilSettings() {
     const navigate = useNavigate();
@@ -20,6 +20,7 @@ export default function PerfilSettings() {
     const [ name, setName ] = useState('')
     const [ nickname, setNickname ] = useState('');
     const [ email, setEmail ] = useState('');
+    const [ newEmail, setNewEmail ] = useState('');
     const [ phone, setPhone ] = useState('');
     const [ urlX, setUrlX ] = useState('');
     const [ urlFacebook, setUrlFacebook ] = useState('');
@@ -30,6 +31,7 @@ export default function PerfilSettings() {
     const [ error, setError ] = useState('');
     const [ message, setMessage ] = useState('');
     const [ openModalPassword, setOpenModalPassword ] = useState(false);
+    const [ openModalEmail, setOpenModalEmail ] = useState(false);
     const [ openModalDelete, setOpenModalDelete ] = useState(false);
 
     // função que obtem o valor das infos do usuário através dos dados do 'userdoc'.
@@ -93,11 +95,12 @@ export default function PerfilSettings() {
     // função do botão 'alterar senha' que abre o modal.
     const handleOpenModal = (evt) => {
         evt.preventDefault();
-        console.log(evt);
         if (evt.target.firstChild.data == 'Alterar senha') {
             setOpenModalPassword(true);
         } else if (evt.target.firstChild.data == 'Deletar conta') {
             setOpenModalDelete(true);
+        } else if (evt.target.firstChild.data == 'Alterar email') {
+            setOpenModalEmail(true);
         }
     };
 
@@ -109,6 +112,7 @@ export default function PerfilSettings() {
         if (evt.target.alt == 'Retornar') {
             setOpenModalPassword(false);
             setOpenModalDelete(false);
+            setOpenModalEmail(false);
         }
     };
 
@@ -137,6 +141,43 @@ export default function PerfilSettings() {
             setError(`Falha ao alterar senha: ${error.message}`);
         }
     };
+
+
+    // função que reautentica o usuário e depois altera seu email.
+    const handleReauthenticateAndUpdateEmail = async (evt) => {
+        evt.preventDefault();
+        setError('');
+        setMessage('');
+
+        // confere se o usuário está ou não logado para realizar a ação.
+        if (!user) {
+            setError('Você precisa estar logado para alterar seu email.')
+            return;
+        }
+
+        // obtém as credenciais do usuário
+        const credential = EmailAuthProvider.credential(user.email, currentPassword);
+
+        // executa a reautenticação passando o valor do usuário e de suas credenciais e depois altera a senha.
+        try {
+            await reauthenticateWithCredential(user, credential);
+            await updateEmail(user, newEmail).then(() => {
+                const docRef = doc(db, 'users', currentUser.uid);
+                try {
+                    updateDoc(docRef, {
+                        email: newEmail
+                    });
+                } catch (error) {
+                    setError('Erro ao atualizar o documento.')
+                }
+                auth.useDeviceLanguage();
+                sendEmailVerification(user);
+                setMessage('Alteração feita com sucesso! Verifique através do link recebido por email.');
+            })
+        } catch (error) {
+            setError(`Falha ao alterar o email: ${error.message}`);
+        }
+    }
 
     // função que reautentica o usuário e depois deleta sua conta.
     const handleReauthenticateAndDeleteAccount = async (evt) => {
@@ -196,13 +237,13 @@ export default function PerfilSettings() {
                                 </div>
                             </div>
 
-                            <div className={styles.perfilField}>
+                            {/* <div className={styles.perfilField}>
                                 <label htmlFor="f_perfilEmail">Email</label>
                                 <div className={styles.perfilFieldInfos}>
                                     <input type="email" name="f_perfilEmail" id="f_perfilEmail" value={email} onChange={(evt) => setEmail(evt.target.value)} disabled />
                                     <img src={edit} alt="ícone Editar Informação" onClick={() => handleUnlockField('f_perfilEmail')} />
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className={styles.perfilField}>
                                 <label htmlFor="f_perfilPhone">Celular</label>
@@ -247,7 +288,8 @@ export default function PerfilSettings() {
                             <div className={styles.perfilSettingsButtonsContainer}>
                                 <button className={styles.sendChangesButton} type="submit" onClick={handleSaveChanges}>Salvar alterações</button>
                                 <button className={styles.updatePasswordButton} onClick={handleOpenModal} >Alterar senha</button>
-                                <button className={styles.deleteAccountButton} onClick={handleOpenModal}>Deletar conta</button>
+                                <button className={styles.updateEmailButton} onClick={handleOpenModal} >Alterar email</button>
+                                <button className={styles.deleteAccountButton} onClick={handleOpenModal} >Deletar conta</button>
                             </div>
 
                             {/* Modal de alteração de senha */}
@@ -275,6 +317,39 @@ export default function PerfilSettings() {
                                         </div>
 
                                         <button onClick={handleReauthenticateAndUpdatePassword}>Salvar alteração</button>
+
+                                        {error && <p style={{ color: 'var(--primary-color)', fontWeight: '600' }}>{error}</p>}
+                                        {message && <p style={{ color: 'var(--black-color)' }}>{message}</p>}
+                                    </form>
+                                </div>
+                            </Modal>
+
+
+                            {/* Modal de alteração de email */}
+                            <Modal isOpen={openModalEmail}>
+                                {/* children */}
+                                <div className={styles.modalContainer}>
+                                    <div className={styles.modalTitleContainer}>
+                                        <div onClick={handleCloseModal}>
+                                            <ArrowBack />
+                                        </div>
+                                        <h1 className={styles.modalTitle}>Alterar email</h1>
+                                    </div>
+                                    <p className={styles.modalSubtitle}>Para alterar seu email, você precisa informar seu novo email, e então confirmar sua senha.</p>
+                                    <hr />
+                                    
+                                    <form>
+                                        <div className={styles.modalFieldInfos}>
+                                            <label htmlFor="f_newEmail">Novo email:</label>
+                                            <input type="email" name="f_newEmail" id="f_newEmail" value={newEmail} onChange={(evt) => setNewEmail(evt.target.value)} />
+                                        </div>
+
+                                        <div className={styles.modalFieldInfos}>
+                                            <label htmlFor="f_password">Senha atual:</label>
+                                            <input type="password" name="f_password" id="f_password" value={currentPassword} onChange={(evt) => setCurrentPassword(evt.target.value)} />
+                                        </div>
+
+                                        <button onClick={handleReauthenticateAndUpdateEmail}>Salvar alteração</button>
 
                                         {error && <p style={{ color: 'var(--primary-color)', fontWeight: '600' }}>{error}</p>}
                                         {message && <p style={{ color: 'var(--black-color)' }}>{message}</p>}

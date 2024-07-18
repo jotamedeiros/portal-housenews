@@ -76,19 +76,29 @@
     justify-content: center;
     align-items: center;
     gap: 2rem;
-    width: 85%;
-}
-
-.perfilSettingsButtonsContainer button {
-    width: 15rem;
+    /* width: 85%; */
 }
 
 .updatePasswordButton {
-    background-color: var(--gray-color);
+    background-color: #fff;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
 }
 
 .updatePasswordButton:hover {
-    background-color: var(--gray-color-hover);
+    background-color: var(--primary-color-hover);
+    color: #fff;
+}
+
+.updateEmailButton {
+    background-color: #fff;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.updateEmailButton:hover {
+    background-color: var(--primary-color-hover);
+    color: #fff;
 }
 
 .deleteAccountButton {
