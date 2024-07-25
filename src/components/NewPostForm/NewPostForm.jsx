@@ -1,62 +1,103 @@
 import styles from './NewPostForm.module.css'
 import ArrowBack from '../ArrowBack/ArrowBack';
-import { auth, db } from '../../firebase/firebase';
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { auth, db, storage } from '../../firebase/firebase';
+import { doc, getDoc, setDoc, addDoc, collection } from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import Resizer from 'react-image-file-resizer';
 import { useState } from 'react';
 import { useAuth } from '../../contexts/Auth/AuthContext';
 
 export default function NewPostForm() {
+    const { currentUser } = useAuth();
+
+    // declaração de states da nova notícia
     const [ categorie, setCategorie ] = useState('');
     const [ author, setAuthor ] = useState('');
     const [ title, setTitle ] = useState('');
     const [ subtitle, setSubtitle ] = useState('');
     const [ text, setText ] = useState('');
+    
+    // declaração de states referentes ao upload da imagem.
+    const [image, setImage] = useState(null);
+    const [progress, setProgress] = useState(0);
+    const [url, setUrl] = useState('');
 
-    const { currentUser } = useAuth();
-
-    const newpostData = {
-        uid: currentUser.uid,
-        categorie: categorie,
-        title: title,
-        subtitle: subtitle,
-        text: text
-    };
-
-    // cria o documento referente ao usuário dentro do banco de dados.
-    async function createDocumentWithCustomId(collectionName, customId, newpostData) {
-        try {
-            // Referência ao documento com o ID personalizado
-            const docRef = doc(db, collectionName, customId)
-
-            // Defina os dados no documento
-            await setDoc(docRef, newpostData)
-
-            console.log(`Documento criado com o ID personalizado: ${customId}`);
-        } catch (error) {
-            console.error("Erro ao criar documento com ID personalizado: ", error);
+    // função que seta a o state 'image' de acordo com o arquivo enviado pelo usuário.
+    const handleChange = (e) => {
+        if (e.target.files[0]) {
+          setImage(e.target.files[0]);
         }
-    }
+      };
 
-    // // função que limpa os campos.
-    // const handleClearFields = async (e) => {
-    //     e.preventDefault();
-    //     setCategorie('');
-    //     setAuthor('');
-    //     setTitle('');
-    //     setSubtitle('');
-    //     setText('');
+    // função que faz o upload da imagem para o Storage e retorna o url da imagem no state 'url'.
+    const handleUpload = async () => {
+        if (image) {
+          const storageRef = ref(storage, `news-images/${image.name}`);
+          const uploadTask = uploadBytesResumable(storageRef, image);
+    
+          uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              setProgress(progress);
+            },
+            (error) => {
+              console.error("Error uploading image: ", error);
+            },
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                setUrl(downloadURL);
+              });
+            }
+          );
+        }
+      };
+
+    // // infos referentes à notícia que são passadas para o banco de dados no upload.
+    // const newpostData = {
+    //     uid: currentUser.uid,
+    //     categorie: categorie,
+    //     title: title,
+    //     subtitle: subtitle,
+    //     text: text,
+    //     imageUrl: url
+    // };
+
+    // // cria o documento referente ao usuário dentro do banco de dados.
+    // async function createDocumentWithCustomId(collectionName, customId, newpostData) {
+    //     try {
+    //         // Referência ao documento com o ID personalizado
+    //         const docRef = doc(db, collectionName, customId)
+
+    //         // Defina os dados no documento
+    //         await setDoc(docRef, newpostData)
+
+    //         console.log(`Documento criado com o ID personalizado: ${customId}`);
+    //     } catch (error) {
+    //         console.error("Erro ao criar documento com ID personalizado: ", error);
+    //     }
     // }
 
     // função que cria o documento referente ao novo post.
     const handleCreateNewPost = async (e) => {
         e.preventDefault();
         try {
-            await createDocumentWithCustomId('news', currentUser.uid, newpostData).then(() => {
-                alert('Nova notícia compartilhada com sucesso!');
-                location.reload();
-            })
+            await handleUpload();
+            await addDoc(collection(db, 'news'), {
+              uid: currentUser.uid,
+              categorie: categorie,
+              author: author,
+              title: title,
+              subtitle: subtitle,
+              text: text,
+              imageUrl: url
+            }).then(() => {
+              alert('Nova notícia compartilhada com sucesso!');
+              location.reload();
+            });
         } catch (error) {
             alert('Erro ao compartilhar notícia', error)
+            console.log(error)
         }
     }
 
@@ -96,7 +137,7 @@ export default function NewPostForm() {
                         <input type="text" name="f_subtitle" id="f_subtitle" value={subtitle} onChange={(evt) => setSubtitle(evt.target.value)} required />
 
                         <label htmlFor="f_img">Imagem</label>
-                        <input type="file" name="f_img" id="f_img" accept='image/*' />
+                        <input type="file" name="f_img" id="f_img" onChange={handleChange} accept='image/*' required />
 
                         <label htmlFor="f_text">Texto</label>
                         <textarea name="f_text" id="f_text" value={text} onChange={(evt) => setText(evt.target.value)} autoComplete='off' placeholder='Insira o texto da notícia aqui.' minLength='20' maxLength='400' required></textarea>
